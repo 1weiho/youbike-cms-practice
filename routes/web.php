@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MenuController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,13 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/menu', [MenuController::class, 'listAll']);
+Route::get('/menu/add', function () {
+    return view('menu-add');
+});
+Route::get('/menu/edit/{id}', [MenuController::class, 'edit']);
+
+Route::post('/menu/add', [MenuController::class, 'add'])->name('menu.add');
+Route::delete('/menu/{id}', [MenuController::class, 'delete'])->name('menu.delete');
+Route::put('/menu/{id}', [MenuController::class, 'update'])->name('menu.edit');
