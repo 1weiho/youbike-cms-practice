@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AreaController;
 use App\Http\Controllers\MenuController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,6 +19,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+/* Menu */
 Route::get('/menu', [MenuController::class, 'listAll']);
 Route::get('/menu/add', function () {
     return view('menu-add');
@@ -27,3 +29,14 @@ Route::get('/menu/edit/{id}', [MenuController::class, 'edit']);
 Route::post('/menu/add', [MenuController::class, 'create'])->name('menu.create');
 Route::delete('/menu/{id}', [MenuController::class, 'delete'])->name('menu.delete');
 Route::put('/menu/{id}', [MenuController::class, 'update'])->name('menu.update');
+
+/* Area */
+Route::get('/area', [AreaController::class, 'listAll']);
+Route::get('/area/add', function () {
+    return view('area-add');
+});
+Route::get('/area/edit/{id}', [AreaController::class, 'edit']);
+
+Route::post('/area/add', [AreaController::class, 'create'])->name('area.create');
+Route::delete('/area/{id}', [AreaController::class, 'delete'])->name('area.delete');
+Route::put('/area/{id}', [AreaController::class, 'update'])->name('area.update');
