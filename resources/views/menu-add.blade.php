@@ -16,7 +16,7 @@
     <h1>選單 - 新增</h1>
     <div class="d-flex h-full justify-content-end rounded bg-white p-5 mt-5 d-flex flex-column">
       <h3>選單名稱</h3>
-      <form method="POST" action="{{ route('menu.add') }}">
+      <form method="POST" action="{{ route('menu.create') }}">
         @csrf
         <div class="form-outline mt-3">
           <input type="text" class="form-control form-control-lg" placeholder="選單名稱" name="name" />

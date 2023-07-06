@@ -16,7 +16,7 @@
     <h1>選單 - 新增</h1>
     <div class="d-flex h-full justify-content-end rounded bg-white p-5 mt-5 d-flex flex-column">
       <h3>選單名稱</h3>
-      <form action="{{ route('menu.edit', ['id' => $menu->_id]) }}" method="POST">
+      <form action="{{ route('menu.update', ['id' => $menu->_id]) }}" method="POST">
         @csrf
         @method('PUT')
         <div class="form-outline mt-3">

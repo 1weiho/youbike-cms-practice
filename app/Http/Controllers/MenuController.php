@@ -20,7 +20,7 @@ class MenuController extends Controller
     }
 
     // add new menu
-    public function add(Request $request)
+    public function create(Request $request)
     {
         $validatedData = $request->validate([
             'name' => ['required', new UniqueMenu],

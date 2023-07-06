@@ -24,6 +24,6 @@ Route::get('/menu/add', function () {
 });
 Route::get('/menu/edit/{id}', [MenuController::class, 'edit']);
 
-Route::post('/menu/add', [MenuController::class, 'add'])->name('menu.add');
+Route::post('/menu/add', [MenuController::class, 'create'])->name('menu.create');
 Route::delete('/menu/{id}', [MenuController::class, 'delete'])->name('menu.delete');
-Route::put('/menu/{id}', [MenuController::class, 'update'])->name('menu.edit');
+Route::put('/menu/{id}', [MenuController::class, 'update'])->name('menu.update');
