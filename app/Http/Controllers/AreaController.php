@@ -17,6 +17,14 @@ class AreaController extends Controller
         return view('area-list', ['area' => $collection]);
     }
 
+    // list all for api
+    public function index()
+    {
+        $areaModel = new Area();
+        $collection = $areaModel->list();
+        return response()->json($collection);
+    }
+
     // add new area
     public function create(Request $request)
     {

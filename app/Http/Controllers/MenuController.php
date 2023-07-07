@@ -17,6 +17,14 @@ class MenuController extends Controller
         return view('menu-list', ['menu' => $collection]);
     }
 
+    // list all for api
+    public function index()
+    {
+        $menuModel = new Menu();
+        $collection = $menuModel->list();
+        return response()->json($collection);
+    }
+
     // add new menu
     public function create(Request $request)
     {
