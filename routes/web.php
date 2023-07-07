@@ -22,7 +22,7 @@ Route::get('/menu', [MenuController::class, 'listAll']);
 Route::get('/menu/add', function () {
     return view('menu-add');
 });
-Route::get('/menu/edit/{id}', [MenuController::class, 'edit']);
+Route::get('/menu/edit/{id}', [MenuController::class, 'listOne']);
 
 Route::post('/menu/add', [MenuController::class, 'create'])->name('menu.create');
 Route::delete('/menu/{id}', [MenuController::class, 'delete'])->name('menu.delete');
