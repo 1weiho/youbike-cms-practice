@@ -3,55 +3,55 @@
 namespace App\Http\Controllers;
 
 use App\Models\Area;
-use App\Rules\UniqueArea;
 use Illuminate\Http\Request;
 
 class AreaController extends Controller
 {
 
-    // list all area
+    // 顯示所有 area
     public function listAll()
     {
-        $areaModel = new Area();
-        $collection = $areaModel->list();
+        $collection = Area::all();
         return view('area-list', ['area' => $collection]);
     }
 
-    // add new area
+    // 建立新的 area
     public function create(Request $request)
     {
-        $validatedData = $request->validate([
-            'name' => ['required', new UniqueArea],
+        $validated = $request->validate([
+            'name' => 'unique:area,name'
+        ], [
+            'name.unique' => '此名稱已經存在。'
         ]);
-        $areaModel = new Area();
-        $areaModel->add($request->input('name'));
+
+        Area::create(['name' => $request->input('name')]);
         return redirect('/area');
     }
 
-    // delete a area by id
+    // 使用 id 刪除對應 area
     public function delete($id)
     {
-        $areaModel = new Area();
-        $areaModel->deleteById($id);
+        Area::destroy($id);
         return redirect('/area');
     }
 
-    // edit a area by id
-    public function edit($id)
+    // 顯示單一 menu
+    public function listOne($id)
     {
-        $areaModel = new Area();
-        $collection = $areaModel->getById($id);
+        $collection = Area::find($id);
         return view('area-edit', ['area' => $collection]);
     }
 
-    // update a area by id
+    // 使用 id 更新對應 area
     public function update(Request $request, $id)
     {
-        $validatedData = $request->validate([
-            'name' => ['required', new UniqueArea],
+        $validated = $request->validate([
+            'name' => 'unique:area,name'
+        ], [
+            'name.unique' => '此名稱已經存在。'
         ]);
-        $areaModel = new Area();
-        $areaModel->updateById($id, $request->input('name'));
+
+        Area::where('_id', $id)->update(['name' => $request->input('name')]);
         return redirect('/area');
     }
 }

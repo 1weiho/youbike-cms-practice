@@ -35,7 +35,7 @@
             <tr>
               <td>{{ $item->name }}</td>
               <td class="d-flex">
-                <a class="btn btn-warning me-3" href={{ "/area/edit/" . $item->_id->__toString() }}>修改</a>
+                <a class="btn btn-warning me-3" href={{ "/area/edit/" . $item->_id }}>修改</a>
                 <form id="delete-form-{{ $item->_id }}" action="{{ route('area.delete', ['id' => $item->_id]) }}"
                   method="POST">
                   @csrf
