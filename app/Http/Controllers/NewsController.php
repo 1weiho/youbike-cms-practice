@@ -12,8 +12,7 @@ class NewsController extends Controller
     // list all news
     public function index()
     {
-        $newsModel = new News();
-        $collection = $newsModel->list();
+        $collection = News::all();
         return response()->json($collection);
     }
 
@@ -29,7 +28,7 @@ class NewsController extends Controller
         $status = $request->input('status');
         $title = $request->input('title');
         $content = $request->input('content');
-        
+
         if (
             empty($area) ||
             empty($menu) ||
@@ -43,11 +42,13 @@ class NewsController extends Controller
         }
 
         try {
-            $validatedData = $request->validate([
-                'start_at' => 'required|date',
-                'end_at' => ['required', 'date', new EndAtGreaterThanStartAtRule],
+            $validated = $request->validate([
+                'start_at' => ['required', 'date'],
+                'end_at' => ['required', 'date', 'after:start_at'],
+            ], [
+                'end_at.after' => '結束時間必須大於開始時間。',
             ]);
-            $newsModel->add($area, $menu, $start_at, $end_at, $status, $title, $content);
+            News::create(['area' => $area, 'menu' => $menu, 'start_at' => $start_at, 'end_at' => $end_at, 'status' => $status, 'title' => $title, 'content' => $content]);
             return response()->json(['status' => 'success', 'message' => 'News added successfully!']);
         } catch (ValidationException $e) {
             $errors = $e->validator->errors()->all();
@@ -58,8 +59,7 @@ class NewsController extends Controller
     // show a news by id
     public function show($id)
     {
-        $newsModel = new News();
-        $collection = $newsModel->getById($id);
+        $collection = News::find($id);
         return response()->json($collection);
     }
 
@@ -89,11 +89,13 @@ class NewsController extends Controller
         }
 
         try {
-            $validatedData = $request->validate([
-                'start_at' => 'required|date',
-                'end_at' => ['required', 'date', new EndAtGreaterThanStartAtRule],
+            $validated = $request->validate([
+                'start_at' => ['required', 'date'],
+                'end_at' => ['required', 'date', 'after:start_at'],
+            ], [
+                'end_at.after' => '結束時間必須大於開始時間。',
             ]);
-            $newsModel->updateById($id, $area, $menu, $start_at, $end_at, $status, $title, $content);
+            News::where('_id', $id)->update(['area' => $area, 'menu' => $menu, 'start_at' => $start_at, 'end_at' => $end_at, 'status' => $status, 'title' => $title, 'content' => $content]);
             return response()->json(['status' => 'success', 'message' => 'News updated successfully!']);
         } catch (ValidationException $e) {
             $errors = $e->validator->errors()->all();
@@ -104,8 +106,7 @@ class NewsController extends Controller
     // delete a news by id
     public function destroy($id)
     {
-        $newsModel = new News();
-        $newsModel->deleteById($id);
+        News::destroy($id);
         return response()->json(['status' => 'success', 'message' => 'News deleted successfully!']);
     }
 }

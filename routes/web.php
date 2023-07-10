@@ -36,7 +36,7 @@ Route::get('/area', [AreaController::class, 'listAll']);
 Route::get('/area/add', function () {
     return view('area-add');
 });
-Route::get('/area/edit/{id}', [AreaController::class, 'edit']);
+Route::get('/area/edit/{id}', [AreaController::class, 'listOne']);
 
 Route::post('/area/add', [AreaController::class, 'create'])->name('area.create');
 Route::delete('/area/{id}', [AreaController::class, 'delete'])->name('area.delete');

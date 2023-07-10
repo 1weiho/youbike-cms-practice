@@ -29,7 +29,7 @@
             <li class="d-flex justify-content-between border-bottom mb-5 py-3">
               <h5>{{ $loop->iteration }}. {{ $item->name }}</h5>
               <div class="d-flex">
-                <a class="btn btn-warning me-3" href={{ "/menu/edit/" . $item->_id->__toString() }}>修改</a>
+                <a class="btn btn-warning me-3" href={{ "/menu/edit/" . $item->_id }}>修改</a>
                 <form id="delete-form-{{ $item->_id }}" action="{{ route('menu.delete', ['id' => $item->_id]) }}"
                   method="POST">
                   @csrf

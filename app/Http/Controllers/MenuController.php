@@ -3,63 +3,60 @@
 namespace App\Http\Controllers;
 
 use App\Models\Menu;
-use App\Rules\UniqueMenu;
 use Illuminate\Http\Request;
 
 class MenuController extends Controller
 {
 
-    // list all menu
+    // 顯示所有 menu
     public function listAll()
     {
-        $menuModel = new Menu();
-        $collection = $menuModel->list();
+        $collection = Menu::all();
         return view('menu-list', ['menu' => $collection]);
     }
 
-    // list all for api
+    // 列出所有 menu 的 json
     public function index()
     {
-        $menuModel = new Menu();
-        $collection = $menuModel->list();
+        $collection = Menu::all();
         return response()->json($collection);
     }
 
-    // add new menu
+    // 建立新的 menu
     public function create(Request $request)
     {
-        $validatedData = $request->validate([
-            'name' => ['required', new UniqueMenu],
+        $validated = $request->validate([
+            'name' => 'unique:menu,name'
+        ], [
+            'name.unique' => '此名稱已經存在。'
         ]);
-        $menuModel = new Menu();
-        $menuModel->add($request->input('name'));
+        Menu::create(['name' => $request->input('name')]);
         return redirect('/menu');
     }
 
-    // delete a menu by id
+    // 使用 id 刪除對應 menu
     public function delete($id)
     {
-        $menuModel = new Menu();
-        $menuModel->deleteById($id);
+        Menu::destroy($id);
         return redirect('/menu');
     }
 
-    // edit a menu by id
-    public function edit($id)
+    // 顯示單一 menu
+    public function listOne($id)
     {
-        $menuModel = new Menu();
-        $collection = $menuModel->getById($id);
+        $collection = Menu::find($id);
         return view('menu-edit', ['menu' => $collection]);
     }
 
-    // update a menu by id
+    // 使用 id 更新對應 menu
     public function update(Request $request, $id)
     {
-        $validatedData = $request->validate([
-            'name' => ['required', new UniqueMenu],
+        $validated = $request->validate([
+            'name' => 'unique:menu,name'
+        ], [
+            'name.unique' => '此名稱已經存在。'
         ]);
-        $menuModel = new Menu();
-        $menuModel->updateById($id, $request->input('name'));
+        Menu::where('_id', $id)->update(['name' => $request->input('name')]);
         return redirect('/menu');
     }
 }
