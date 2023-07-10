@@ -141,7 +141,7 @@ const setAreaOnChangeListner = () => {
         } else {
             areaSelect.push(selectedOption);
         }
-        $('#result').html(areaSelect.map(area => `<span class="badge bg-secondary me-2 mt-4">${area.name}</span>`).join(''));
+        $('#result').html(areaSelect.map(area => `<span class="badge bg-secondary me-2 mt-4" style="cursor: pointer;" onClick="handleBadgeClickRemove('${area.id}')">${area.name} X</span>`).join(''));
         let areaIds = areaSelect.map(option => option.id);
         $('input[name="area"]').val(areaIds.join(','));
     });
@@ -150,6 +150,16 @@ const setAreaOnChangeListner = () => {
 const getNewsById = async (id) => {
     const news = await axios.get(`/api/news/${id}`);
     return news.data;
+}
+
+const handleBadgeClickRemove = (id) => {
+    let index = areaSelect.findIndex(option => option.id == id);
+    if (index > -1) {
+        areaSelect.splice(index, 1);
+    }
+    $('#result').html(areaSelect.map(area => `<span class="badge bg-secondary me-2 mt-4" style="cursor: pointer;" onClick="handleBadgeClickRemove('${area.id}')">${area.name} X</span>`).join(''));
+    let areaIds = areaSelect.map(option => option.id);
+    $('input[name="area"]').val(areaIds.join(','));
 }
 
 const setNewsFormData = (data) => {
@@ -164,6 +174,6 @@ const setNewsFormData = (data) => {
     $('textarea[name="content"]').val(data.content);
     $('select[name="menu"]').val(data.menu);
     areaSelect = data.area;
-    $('#result').html(areaSelect.map(area => `<span class="badge bg-secondary me-2 mt-4">${area.name}</span>`).join(''));
+    $('#result').html(areaSelect.map(area => `<span class="badge bg-secondary me-2 mt-4" style="cursor: pointer;" onClick="handleBadgeClickRemove('${area.id}')">${area.name} X</span>`).join(''));
     $('input[name="area"]').val(areaSelect.join(','));
 }
