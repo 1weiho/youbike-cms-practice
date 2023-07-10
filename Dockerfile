@@ -26,7 +26,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 COPY . /var/www
 
 # 安裝 Laravel 相依套件
-# RUN composer install --optimize-autoloader --no-dev
+RUN composer install --optimize-autoloader --no-dev
 
 # 設定權限
 RUN chown -R www-data:www-data /var/www
