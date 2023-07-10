@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Menu;
+use App\Models\News;
 use Illuminate\Http\Request;
 
 class MenuController extends Controller
@@ -37,6 +38,10 @@ class MenuController extends Controller
     // 使用 id 刪除對應 menu
     public function delete($id)
     {
+        $news = News::where('menu', $id)->get();
+        if (count($news) > 0) {
+            return redirect('/menu')->with('error', '該選單被最新消息使用無法刪除');
+        }
         Menu::destroy($id);
         return redirect('/menu');
     }
