@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Area;
+use App\Models\News;
 use Illuminate\Http\Request;
 
 class AreaController extends Controller
@@ -38,6 +39,10 @@ class AreaController extends Controller
     // 使用 id 刪除對應 area
     public function delete($id)
     {
+        $areas = News::where('area', $id)->get();
+        if (count($areas) > 0) {
+            return redirect('/area')->with('error', '該區域被最新消息使用無法刪除');
+        }
         Area::destroy($id);
         return redirect('/area');
     }

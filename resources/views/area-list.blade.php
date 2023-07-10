@@ -56,6 +56,11 @@
 </html>
 
 <script>
+  @if (session('error'))
+      var errorMessage = "{{ session('error') }}";
+      alert(errorMessage);
+  @endif
+
   $(document).ready(function () {
     $('#myTable').DataTable({
       language: {

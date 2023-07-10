@@ -50,3 +50,10 @@
 </body>
 
 </html>
+
+<script>
+  @if (session('error'))
+      var errorMessage = "{{ session('error') }}";
+      alert(errorMessage);
+  @endif
+</script>
