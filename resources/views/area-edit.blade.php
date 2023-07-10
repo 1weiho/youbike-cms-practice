@@ -11,8 +11,8 @@
 <title>區域 - 修改</title>
 </head>
 
-<body class="bg-light">
-  <div class="container p-5">
+<x-layout>
+  <div class="p-5">
     <h1>區域 - 修改</h1>
     <div class="d-flex h-full justify-content-end rounded bg-white p-5 mt-5 d-flex flex-column">
       <h3>區域名稱</h3>
@@ -36,6 +36,6 @@
       </form>
     </div>
   </div>
-</body>
+</x-layout>
 
 </html>

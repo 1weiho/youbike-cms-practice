@@ -11,43 +11,39 @@
 <title>選單</title>
 </head>
 
-<body class="bg-light">
-  <div class="container p-5">
-    <h1>選單</h1>
-    <div class="d-flex h-full justify-content-end rounded bg-white p-5 mt-5 d-flex flex-column">
-      <div class="d-flex justify-content-end">
+<x-layout>
+  <div class="py-4 px-5 min-vh-100">
+    <h2>選單</h2>
+    <div class="d-flex rounded bg-white p-5 mt-3 flex-column">
+      <div class="d-flex mb-5 w-100 justify-content-between align-items-center">
+        <h3>選單名稱</h3>
         <a class="btn btn-primary btn-lg" href="/menu/add">新增</a>
       </div>
-      <div class="p-5">
-        <div class="d-flex border-bottom mb-5">
-          <h3>選單名稱</h2>
-        </div>
+      <ul class="ps-0 mh-25 px-3 overflow-y-scroll" style="max-height: 65vh;">
+        @if(count($menu) > 0)
         <ul class="ps-0">
-          @if(count($menu) > 0)
-          <ul class="ps-0">
-            @foreach($menu as $item)
-            <li class="d-flex justify-content-between border-bottom mb-5 py-3">
-              <h5>{{ $loop->iteration }}. {{ $item->name }}</h5>
-              <div class="d-flex">
-                <a class="btn btn-warning me-3" href={{ "/menu/edit/" . $item->_id }}>修改</a>
-                <form id="delete-form-{{ $item->_id }}" action="{{ route('menu.delete', ['id' => $item->_id]) }}"
-                  method="POST">
-                  @csrf
-                  @method('DELETE')
-                  <button type="submit" class="btn btn-danger" onclick="return confirm('確定要刪除此選單嗎？')">刪除</button>
-                </form>
-              </div>
-            </li>
-            @endforeach
-          </ul>
-          @else
-          <p>無選單</p>
-          @endif
+          @foreach($menu as $item)
+          <li class="d-flex justify-content-between border-bottom mb-5 py-3">
+            <h5>{{ $loop->iteration }}. {{ $item->name }}</h5>
+            <div class="d-flex">
+              <a class="btn btn-warning me-3" href={{ "/menu/edit/" . $item->_id }}>修改</a>
+              <form id="delete-form-{{ $item->_id }}" action="{{ route('menu.delete', ['id' => $item->_id]) }}"
+                method="POST">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-danger" onclick="return confirm('確定要刪除此選單嗎？')">刪除</button>
+              </form>
+            </div>
+          </li>
+          @endforeach
         </ul>
-      </div>
+        @else
+        <p>無選單</p>
+        @endif
+      </ul>
     </div>
   </div>
-</body>
+</x-layout>
 
 </html>
 

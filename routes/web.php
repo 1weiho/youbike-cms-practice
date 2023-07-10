@@ -16,9 +16,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [AreaController::class, 'listAll']);
 
 /* Menu */
 Route::get('/menu', [MenuController::class, 'listAll']);

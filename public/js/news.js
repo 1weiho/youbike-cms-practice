@@ -1,5 +1,6 @@
 const getNews = async () => {
     const news = await axios.get('/api/news');
+    console.log(news.data);
     return news.data;
 }
 

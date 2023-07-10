@@ -38,8 +38,8 @@ class MenuController extends Controller
     // 使用 id 刪除對應 menu
     public function delete($id)
     {
-        $news = News::where('menu', $id)->get();
-        if (count($news) > 0) {
+        $newsCount = News::where('menu', $id)->count();
+        if ($newsCount > 0) {
             return redirect('/menu')->with('error', '該選單被最新消息使用無法刪除');
         }
         Menu::destroy($id);

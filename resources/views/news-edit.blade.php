@@ -17,16 +17,16 @@
 <title>最新消息 - 修改</title>
 </head>
 
-<body class="bg-light">
-  <div class="container p-5">
+<x-layout>
+  <div class="p-5">
     <h1>最新消息 - 修改</h1>
-    <div class="d-flex h-full justify-content-end rounded bg-white p-5 mt-5 d-flex flex-column">
+    <div class="d-flex h-full justify-content-end rounded bg-white p-5 mt-3 d-flex flex-column">
       <form id="newForms" onsubmit="updateForm(); return false;">
         <div class="row form-outline mt-3">
-          <div class="col-2 d-flex justify-content-end align-items-center pe-3">
+          <div class="col-1 d-flex justify-content-end align-items-center pe-3">
             <h5 class="fw-medium">區域</h5>
           </div>
-          <div class="col-10">
+          <div class="col-11">
             <select class="form-select form-select-lg" name="area-ui">
             </select>
             <input type="hidden" name="area">
@@ -34,35 +34,35 @@
           </div>
         </div>
         <div class="row form-outline mt-3">
-          <div class="col-2 d-flex justify-content-end align-items-center pe-3">
+          <div class="col-1 d-flex justify-content-end align-items-center pe-3">
             <h5 class="fw-medium">選單</h5>
           </div>
-          <div class="col-10">
+          <div class="col-11">
             <select class="form-select form-select-lg" name="menu">
             </select>
           </div>
         </div>
         <div class="row form-outline mt-3">
-          <div class="col-2 d-flex justify-content-end align-items-center pe-3">
+          <div class="col-1 d-flex justify-content-end align-items-center pe-3">
             <h5 class="fw-medium">開始日期</h5>
           </div>
-          <div class="col-10">
+          <div class="col-11">
             <input type="date" class="form-control form-control-lg" placeholder="開始日期" name="start_at" />
           </div>
         </div>
         <div class="row form-outline mt-3">
-          <div class="col-2 d-flex justify-content-end align-items-center pe-3">
+          <div class="col-1 d-flex justify-content-end align-items-center pe-3">
             <h5 class="fw-medium">結束日期</h5>
           </div>
-          <div class="col-10">
+          <div class="col-11">
             <input type="date" class="form-control form-control-lg" placeholder="結束日期" name="end_at" />
           </div>
         </div>
         <div class="row form-outline mt-3">
-          <div class="col-2 d-flex justify-content-end align-items-center pe-3">
+          <div class="col-1 d-flex justify-content-end align-items-center pe-3">
             <h5 class="fw-medium">狀態</h5>
           </div>
-          <div class="col-10">
+          <div class="col-11">
             <input type="radio" name="status" id="statusShow" value="1">
             <label class="text-success me-3">顯示</label>
             <input type="radio" name="status" id="statusHide" value="0">
@@ -70,18 +70,18 @@
           </div>
         </div>
         <div class="row form-outline mt-3">
-          <div class="col-2 d-flex justify-content-end align-items-center pe-3">
+          <div class="col-1 d-flex justify-content-end align-items-center pe-3">
             <h5 class="fw-medium">標題</h5>
           </div>
-          <div class="col-10">
+          <div class="col-11">
             <input type="text" class="form-control form-control-lg" placeholder="標題" name="title" />
           </div>
         </div>
         <div class="row form-outline mt-3">
-          <div class="col-2 d-flex justify-content-end align-items-center pe-3">
+          <div class="col-1 d-flex justify-content-end align-items-center pe-3">
             <h5 class="fw-medium">內容</h5>
           </div>
-          <div class="col-10">
+          <div class="col-11">
             <textarea class="form-control form-control-lg" placeholder="內容" name="content" rows="6"></textarea>
           </div>
         </div>
@@ -92,7 +92,7 @@
       </form>
     </div>
   </div>
-</body>
+</x-layout>
 
 </html>
 

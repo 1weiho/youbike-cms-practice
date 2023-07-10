@@ -39,8 +39,8 @@ class AreaController extends Controller
     // 使用 id 刪除對應 area
     public function delete($id)
     {
-        $areas = News::where('area', $id)->get();
-        if (count($areas) > 0) {
+        $newsCount = News::where('area', $id)->count();
+        if ($newsCount > 0) {
             return redirect('/area')->with('error', '該區域被最新消息使用無法刪除');
         }
         Area::destroy($id);

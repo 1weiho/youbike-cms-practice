@@ -16,14 +16,14 @@
 <title>最新消息</title>
 </head>
 
-<body class="bg-light">
-  <div class="container p-5">
-    <h1>最新消息</h1>
-    <div class="d-flex h-full justify-content-end rounded bg-white p-5 mt-5 d-flex flex-column">
-      <div class="d-flex justify-content-end">
-        <a class="btn btn-primary btn-lg" href="/news/add">新增</a>
+<x-layout>
+  <div class="py-4 px-5">
+    <h2>最新消息</h2>
+    <div class="d-flex h-full justify-content-end rounded bg-white p-3 mt-3 d-flex flex-column">
+      <div class="d-flex justify-content-end mb-3">
+        <a class="btn btn-primary" href="/news/add">新增</a>
       </div>
-      <div class="p-5">
+      <div>
         <table id="myTable" class="display">
           <thead>
             <tr>
@@ -39,7 +39,7 @@
       </div>
     </div>
   </div>
-</body>
+</x-layout>
 
 </html>
 
