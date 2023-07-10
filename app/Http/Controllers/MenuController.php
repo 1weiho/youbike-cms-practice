@@ -15,6 +15,13 @@ class MenuController extends Controller
         return view('menu-list', ['menu' => $collection]);
     }
 
+    // 列出所有 menu 的 json
+    public function index()
+    {
+        $collection = Menu::all();
+        return response()->json($collection);
+    }
+
     // 建立新的 menu
     public function create(Request $request)
     {

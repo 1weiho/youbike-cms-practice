@@ -15,6 +15,13 @@ class AreaController extends Controller
         return view('area-list', ['area' => $collection]);
     }
 
+    // 列出所有 area 的 json
+    public function index()
+    {
+        $collection = Area::all();
+        return response()->json($collection);
+    }
+
     // 建立新的 area
     public function create(Request $request)
     {

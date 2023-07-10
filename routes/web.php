@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AreaController;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\NewsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,3 +41,14 @@ Route::get('/area/edit/{id}', [AreaController::class, 'listOne']);
 Route::post('/area/add', [AreaController::class, 'create'])->name('area.create');
 Route::delete('/area/{id}', [AreaController::class, 'delete'])->name('area.delete');
 Route::put('/area/{id}', [AreaController::class, 'update'])->name('area.update');
+
+/* News */
+Route::get('/news', function () {
+    return view('news-list');
+});
+Route::get('/news/add', function () {
+    return view('news-add');
+});
+Route::get('/news/edit/{id}', function () {
+    return view('news-edit');
+});
