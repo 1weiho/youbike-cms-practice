@@ -18,35 +18,38 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [AreaController::class, 'listAll']);
 
-/* Menu */
-Route::get('/menu', [MenuController::class, 'listAll']);
-Route::get('/menu/add', function () {
-    return view('menu-add');
-});
-Route::get('/menu/edit/{id}', [MenuController::class, 'listOne']);
+Route::group(['prefix' => 'menu'], function () {
+    Route::get('/', [MenuController::class, 'listAll'])->name('menu.list');
+    Route::get('/add', function () {
+        return view('menu-add');
+    });
+    Route::get('/edit/{id}', [MenuController::class, 'listOne']);
 
-Route::post('/menu/add', [MenuController::class, 'create'])->name('menu.create');
-Route::delete('/menu/{id}', [MenuController::class, 'delete'])->name('menu.delete');
-Route::put('/menu/{id}', [MenuController::class, 'update'])->name('menu.update');
-
-/* Area */
-Route::get('/area', [AreaController::class, 'listAll']);
-Route::get('/area/add', function () {
-    return view('area-add');
+    Route::post('/add', [MenuController::class, 'create'])->name('menu.create');
+    Route::delete('/{id}', [MenuController::class, 'delete'])->name('menu.delete');
+    Route::put('/{id}', [MenuController::class, 'update'])->name('menu.update');
 });
-Route::get('/area/edit/{id}', [AreaController::class, 'listOne']);
 
-Route::post('/area/add', [AreaController::class, 'create'])->name('area.create');
-Route::delete('/area/{id}', [AreaController::class, 'delete'])->name('area.delete');
-Route::put('/area/{id}', [AreaController::class, 'update'])->name('area.update');
+Route::group(['prefix' => 'area'], function () {
+    Route::get('/', [AreaController::class, 'listAll'])->name('area.list');
+    Route::get('/add', function () {
+        return view('area-add');
+    });
+    Route::get('/edit/{id}', [AreaController::class, 'listOne']);
 
-/* News */
-Route::get('/news', function () {
-    return view('news-list');
+    Route::post('/add', [AreaController::class, 'create'])->name('area.create');
+    Route::delete('/{id}', [AreaController::class, 'delete'])->name('area.delete');
+    Route::put('/{id}', [AreaController::class, 'update'])->name('area.update');
 });
-Route::get('/news/add', function () {
-    return view('news-add');
-});
-Route::get('/news/edit/{id}', function () {
-    return view('news-edit');
+
+Route::group(['prefix' => 'news'], function () {
+    Route::get('/', function () {
+        return view('news-list');
+    });
+    Route::get('/add', function () {
+        return view('news-add');
+    });
+    Route::get('/edit/{id}', function () {
+        return view('news-edit');
+    });
 });

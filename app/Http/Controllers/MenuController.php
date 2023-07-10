@@ -32,7 +32,7 @@ class MenuController extends Controller
             'name.unique' => '此名稱已經存在。'
         ]);
         Menu::create(['name' => $request->input('name')]);
-        return redirect('/menu');
+        return redirect()->route('menu.list');
     }
 
     // 使用 id 刪除對應 menu
@@ -40,10 +40,10 @@ class MenuController extends Controller
     {
         $newsCount = News::where('menu', $id)->count();
         if ($newsCount > 0) {
-            return redirect('/menu')->with('error', '該選單被最新消息使用無法刪除');
+            return redirect()->route('menu.list')->with('error', '該選單被最新消息使用無法刪除');
         }
         Menu::destroy($id);
-        return redirect('/menu');
+        return redirect()->route('menu.list');
     }
 
     // 顯示單一 menu
@@ -62,6 +62,6 @@ class MenuController extends Controller
             'name.unique' => '此名稱已經存在。'
         ]);
         Menu::where('_id', $id)->update(['name' => $request->input('name')]);
-        return redirect('/menu');
+        return redirect()->route('menu.list');
     }
 }
