@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Area;
+use App\Models\Menu;
 use App\Models\News;
 use App\Rules\EndAtGreaterThanStartAtRule;
 use Illuminate\Http\Request;
@@ -13,15 +15,32 @@ class NewsController extends Controller
     public function index()
     {
         $collection = News::all();
+        // query menu id to menu name
+        foreach ($collection as $key => $value) {
+            $menu = Menu::find($value['menu']);
+            $collection[$key]['menu'] = $menu['name'];
+        }
+        // query area id to area name
+        foreach ($collection as $key => $value) {
+            $area = [];
+            foreach ($value['area'] as $areaId) {
+                $areaName = Area::find($areaId);
+                array_push($area, $areaName['name']);
+            }
+            $collection[$key]['area'] = $area;
+        }
         return response()->json($collection);
     }
 
     // add new news
     public function store(Request $request)
     {
-        $newsModel = new News();
         $areaString = $request->input('area');
-        $area = explode(',', $areaString);
+        if ($areaString == '') {
+            $area = [];
+        } else {
+            $area = explode(',', $areaString);
+        }
         $menu = $request->input('menu');
         $start_at = $request->input('start_at');
         $end_at = $request->input('end_at');
@@ -60,15 +79,25 @@ class NewsController extends Controller
     public function show($id)
     {
         $collection = News::find($id);
+        // query area id to area name save id and name
+        $area = [];
+        foreach ($collection['area'] as $areaId) {
+            $areaName = Area::find($areaId);
+            array_push($area, ['id' => $areaId, 'name' => $areaName['name']]);
+        }
+        $collection['area'] = $area;
         return response()->json($collection);
     }
 
     // edit a news by id
     public function update(Request $request, $id)
     {
-        $newsModel = new News();
         $areaString = $request->input('area');
-        $area = explode(',', $areaString);
+        if ($areaString == '') {
+            $area = [];
+        } else {
+            $area = explode(',', $areaString);
+        }
         $menu = $request->input('menu');
         $start_at = $request->input('start_at');
         $end_at = $request->input('end_at');

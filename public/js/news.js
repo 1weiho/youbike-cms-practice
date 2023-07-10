@@ -111,7 +111,7 @@ const setAreaOption = (data) => {
     areaSelect.append("<option disabled selected>請選擇區域</option>");
     if (Array.isArray(data)) {
         data.forEach(function (area) {
-            var option = $('<option>').attr('value', area.id).text(area.name);
+            var option = $('<option>').attr('value', area._id).text(area.name);
             areaSelect.append(option);
         });
     }
@@ -122,7 +122,7 @@ const setMenuOption = (data) => {
     menuSelect.append("<option disabled selected>請選擇選單</option>");
     if (Array.isArray(data)) {
         data.forEach(function (menu) {
-            var option = $('<option>').attr('value', menu.id).text(menu.name);
+            var option = $('<option>').attr('value', menu._id).text(menu.name);
             menuSelect.append(option);
         });
     }
@@ -130,16 +130,20 @@ const setMenuOption = (data) => {
 
 const setAreaOnChangeListner = () => {
     $('select[name="area-ui"]').on('change', function () {
-        var selectedOption = $(this).val();
-        if (selectedOption) {
-            if (areaSelect.indexOf(selectedOption) === -1) {
-                areaSelect.push(selectedOption);
-            } else {
-                areaSelect.splice(areaSelect.indexOf(selectedOption), 1);
-            }
+        let selectedOption = {
+            id: $(this).val(),
+            name: $(this).find('option:selected').text()
+        };
+        // check if the option is already selected, if yes, delete it
+        let index = areaSelect.findIndex(option => option.id == selectedOption.id);
+        if (index > -1) {
+            areaSelect.splice(index, 1);
+        } else {
+            areaSelect.push(selectedOption);
         }
-        $('#result').html(areaSelect.map(area => `<span class="badge bg-secondary me-2 mt-4">${area}</span>`).join(''));
-        $('input[name="area"]').val(areaSelect.join(','));
+        $('#result').html(areaSelect.map(area => `<span class="badge bg-secondary me-2 mt-4">${area.name}</span>`).join(''));
+        let areaIds = areaSelect.map(option => option.id);
+        $('input[name="area"]').val(areaIds.join(','));
     });
 }
 
@@ -160,6 +164,6 @@ const setNewsFormData = (data) => {
     $('textarea[name="content"]').val(data.content);
     $('select[name="menu"]').val(data.menu);
     areaSelect = data.area;
-    $('#result').html(areaSelect.map(area => `<span class="badge bg-secondary me-2 mt-4">${area}</span>`).join(''));
+    $('#result').html(areaSelect.map(area => `<span class="badge bg-secondary me-2 mt-4">${area.name}</span>`).join(''));
     $('input[name="area"]').val(areaSelect.join(','));
 }
