@@ -1,5 +1,6 @@
 const getNews = async () => {
     const news = await axios.get('/api/news');
+    console.log(news.data);
     return news.data;
 }
 
@@ -47,9 +48,9 @@ const setNewsList = (data) => {
         html += `
             <tr>
               <td>
-                ${item.area.map(area => `<span class="badge bg-secondary me-2">${area}</span>`).join('')}
+                ${item.area.map(area => `<span class="badge bg-secondary me-2">${area.name}</span>`).join('')}
               </td>
-              <td>${item.menu}</td>
+              <td>${item.menu.name}</td>
               <td>${item.title}</td>
               <td>${statusBadge}</td>
               <td class="d-flex">
@@ -131,34 +132,34 @@ const setMenuOption = (data) => {
 const setAreaOnChangeListner = () => {
     $('select[name="area-ui"]').on('change', function () {
         let selectedOption = {
-            id: $(this).val(),
+            _id: $(this).val(),
             name: $(this).find('option:selected').text()
         };
-        // check if the option is already selected, if yes, delete it
-        let index = areaSelect.findIndex(option => option.id == selectedOption.id);
+        let index = areaSelect.findIndex(option => option._id == selectedOption._id);
         if (index > -1) {
             areaSelect.splice(index, 1);
         } else {
             areaSelect.push(selectedOption);
         }
         $('#result').html(areaSelect.map(area => `<span class="badge bg-secondary me-2 mt-4" style="cursor: pointer;" onClick="handleBadgeClickRemove('${area.id}')">${area.name} X</span>`).join(''));
-        let areaIds = areaSelect.map(option => option.id);
+        let areaIds = areaSelect.map(option => option._id);
         $('input[name="area"]').val(areaIds.join(','));
     });
 }
 
 const getNewsById = async (id) => {
     const news = await axios.get(`/api/news/${id}`);
+    console.log(news.data);
     return news.data;
 }
 
 const handleBadgeClickRemove = (id) => {
-    let index = areaSelect.findIndex(option => option.id == id);
+    let index = areaSelect.findIndex(option => option._id == id);
     if (index > -1) {
         areaSelect.splice(index, 1);
     }
     $('#result').html(areaSelect.map(area => `<span class="badge bg-secondary me-2 mt-4" style="cursor: pointer;" onClick="handleBadgeClickRemove('${area.id}')">${area.name} X</span>`).join(''));
-    let areaIds = areaSelect.map(option => option.id);
+    let areaIds = areaSelect.map(option => option._id);
     $('input[name="area"]').val(areaIds.join(','));
 }
 
@@ -172,8 +173,9 @@ const setNewsFormData = (data) => {
     }
     $('input[name="title"]').val(data.title);
     $('textarea[name="content"]').val(data.content);
-    $('select[name="menu"]').val(data.menu);
+    $('select[name="menu"]').val(data.menu._id);
     areaSelect = data.area;
-    $('#result').html(areaSelect.map(area => `<span class="badge bg-secondary me-2 mt-4" style="cursor: pointer;" onClick="handleBadgeClickRemove('${area.id}')">${area.name} X</span>`).join(''));
-    $('input[name="area"]').val(areaSelect.join(','));
+    $('#result').html(areaSelect.map(area => `<span class="badge bg-secondary me-2 mt-4" style="cursor: pointer;" onClick="handleBadgeClickRemove('${area._id}')">${area.name} X</span>`).join(''));
+    const idArray = areaSelect.map(obj => obj._id);
+    $('input[name="area"]').val(idArray.join(','));
 }

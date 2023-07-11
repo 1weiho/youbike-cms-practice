@@ -33,18 +33,18 @@ class AreaController extends Controller
         ]);
 
         Area::create(['name' => $request->input('name')]);
-        return redirect('/area');
+        return redirect()->route('area.list');
     }
 
     // 使用 id 刪除對應 area
     public function delete($id)
     {
-        $areas = News::where('area', $id)->get();
-        if (count($areas) > 0) {
-            return redirect('/area')->with('error', '該區域被最新消息使用無法刪除');
+        $newsCount = News::where('area_id', $id)->count();
+        if ($newsCount > 0) {
+            return redirect()->route('area.list')->with('error', '該區域被最新消息使用無法刪除');
         }
         Area::destroy($id);
-        return redirect('/area');
+        return redirect()->route('area.list');
     }
 
     // 顯示單一 menu
@@ -64,6 +64,6 @@ class AreaController extends Controller
         ]);
 
         Area::where('_id', $id)->update(['name' => $request->input('name')]);
-        return redirect('/area');
+        return redirect()->route('area.list');
     }
 }
