@@ -1,6 +1,5 @@
 const getNews = async () => {
     const news = await axios.get('/api/news');
-    console.log(news.data);
     return news.data;
 }
 
@@ -22,6 +21,18 @@ const initDataTable = () => {
         autoWidth: false,
     });
 }
+
+const initEditor = (content) => {
+    ClassicEditor
+        .create(document.querySelector('#editor'))
+        .then(editor => {
+            editor.setData(content);
+        })
+        .catch(error => {
+            console.error(error);
+        });
+}
+
 const handleDeleteNews = async (id) => {
     if (!confirm('確定要刪除此筆資料？')) return;
 
@@ -84,6 +95,7 @@ const getMenu = async () => {
 }
 
 const submitForm = async () => {
+    await new Promise(resolve => setTimeout(resolve, 100));
     let data = $('#newForms').serialize();
     try {
         const res = await axios.post('/api/news', data);
@@ -96,6 +108,7 @@ const submitForm = async () => {
 }
 
 const updateForm = async () => {
+    await new Promise(resolve => setTimeout(resolve, 100));
     let data = $('#newForms').serialize();
     try {
         const res = await axios.put('/api/news/' + getUrlId(), data);
@@ -149,7 +162,6 @@ const setAreaOnChangeListner = () => {
 
 const getNewsById = async (id) => {
     const news = await axios.get(`/api/news/${id}`);
-    console.log(news.data);
     return news.data;
 }
 
@@ -172,7 +184,6 @@ const setNewsFormData = (data) => {
         $('#statusHide').prop('checked', true);
     }
     $('input[name="title"]').val(data.title);
-    $('textarea[name="content"]').val(data.content);
     $('select[name="menu"]').val(data.menu._id);
     areaSelect = data.area;
     $('#result').html(areaSelect.map(area => `<span class="badge bg-secondary me-2 mt-4" style="cursor: pointer;" onClick="handleBadgeClickRemove('${area._id}')">${area.name} X</span>`).join(''));
