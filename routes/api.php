@@ -22,5 +22,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('news', NewsController::class);
+Route::post('news/{id}', [NewsController::class, 'modify']);
 Route::get('menu', [MenuController::class, 'index']);
 Route::get('area', [AreaController::class, 'index']);

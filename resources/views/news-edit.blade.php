@@ -19,17 +19,30 @@
 </head>
 
 <x-layout>
-  <div class="p-5">
+  <div class="py-4 px-5">
     <h1>最新消息 - 修改</h1>
     <div class="d-flex h-full rounded bg-white p-5 pt-3 mt-3 d-flex flex-column overflow-y-scroll"
       style="max-height: 88vh;">
       <form id="newForms" onsubmit="updateForm(); return false;">
         <div class="row form-outline mt-3">
           <div class="col-1 d-flex justify-content-end align-items-center pe-3">
+            <h5 class="fw-medium">封面圖片</h5>
+          </div>
+          <div class="col-11">
+            <input type="file" class="form-control form-control-lg" id="coverUpload" name="cover"
+              accept="image/png, image/jpeg, image/jpg" />
+            <div class="mt-3">
+              <img id="coverPreview" style="max-width: 100%; max-height: 200px;">
+            </div>
+          </div>
+        </div>
+        <div class="row form-outline mt-3">
+          <div class="col-1 d-flex justify-content-end align-items-center pe-3">
             <h5 class="fw-medium">區域</h5>
           </div>
           <div class="col-11">
             <select class="form-select form-select-lg" name="area-ui">
+              <option disabled selected>請選擇區域</option>
             </select>
             <input type="hidden" name="area">
             <p id="result"></p>
@@ -41,6 +54,7 @@
           </div>
           <div class="col-11">
             <select class="form-select form-select-lg" name="menu">
+              <option disabled selected>請選擇選單</option>
             </select>
           </div>
         </div>
@@ -109,6 +123,7 @@
     setMenuOption(menu);
     setNewsFormData(news);
     setAreaOnChangeListner();
-    initEditor(news.content);
+    await initEditor(news.content);
+    setCoverUploadListener();
   });
 </script>

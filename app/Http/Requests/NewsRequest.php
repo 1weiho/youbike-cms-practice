@@ -20,6 +20,7 @@ class NewsRequest extends FormRequest
             'status' => ['required', 'numeric', Rule::in([0, 1])],
             'title' => ['required'],
             'content' => ['required'],
+            'cover' => ['image', 'mimes:png,jpeg,jpg', 'max:2048'],
         ];
     }
 
@@ -38,6 +39,9 @@ class NewsRequest extends FormRequest
             'status.in' => '狀態必須是顯示或隱藏',
             'title.required' => '請填入標題',
             'content.required' => '請填入內容',
+            'cover.image' => '封面必須是一個圖片',
+            'cover.mimes' => '封面必須是 png, jpeg, jpg 格式',
+            'cover.max' => '封面大小不能超過 2MB',
         ];
     }
 }

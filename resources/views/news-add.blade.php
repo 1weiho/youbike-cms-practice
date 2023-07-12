@@ -26,10 +26,22 @@
       <form id="newForms" onsubmit="submitForm(); return false;">
         <div class="row form-outline mt-3">
           <div class="col-1 d-flex justify-content-end align-items-center pe-3">
+            <h5 class="fw-medium">封面圖片</h5>
+          </div>
+          <div class="col-11">
+            <input type="file" class="form-control form-control-lg" id="coverUpload" name="cover" accept="image/png, image/jpeg, image/jpg" />
+            <div class="mt-3">
+              <img id="coverPreview" style="max-width: 100%; max-height: 200px;">
+            </div>
+          </div>
+        </div>
+        <div class="row form-outline mt-3">
+          <div class="col-1 d-flex justify-content-end align-items-center pe-3">
             <h5 class="fw-medium">區域</h5>
           </div>
           <div class="col-11">
             <select class="form-select form-select-lg" name="area-ui">
+              <option disabled selected>請選擇區域</option>
             </select>
             <input type="hidden" name="area">
             <p id="result"></p>
@@ -41,6 +53,7 @@
           </div>
           <div class="col-11">
             <select class="form-select form-select-lg" name="menu">
+              <option disabled selected>請選擇選單</option>
             </select>
           </div>
         </div>
@@ -99,13 +112,14 @@
 </html>
 
 <script>
-  const areaSelect = [];
+  let areaSelect = [];
   $(document).ready(async function () {
     const area = await getArea();
     setAreaOption(area);
     const menu = await getMenu();
     setMenuOption(menu);
     setAreaOnChangeListner();
-    initEditor();
+    await initEditor();
+    setCoverUploadListener();
   });
 </script>
