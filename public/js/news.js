@@ -1,27 +1,23 @@
-const getNews = async () => {
-    const news = await axios.get('/api/news');
-    console.log(news.data);
-    return news.data;
+const getNews = async (urlQuery) => {
+    const res = await axios.get('/api/news', {
+        params: urlQuery
+    });
+    return res.data;
 }
 
-const initDataTable = () => {
-    $('#myTable').DataTable({
-        language: {
-            "lengthMenu": "每頁 _MENU_ 筆資料",
-            "info": "顯示第 _START_ 至 _END_ 項結果，共 _TOTAL_ 項",
-            "paginate": {
-                "previous": "上一頁",
-                "next": "下一頁"
-            },
-            "search": "查詢:",
-            "zeroRecords": "無符合資料",
-            "infoEmpty": "顯示第 0 至 0 項結果，共 0 項",
-            "emptyTable": "沒有資料",
-            "infoFiltered": "(從 _MAX_ 筆資料中過濾)",
-        },
-        autoWidth: false,
-    });
+const initEditor = async (content) => {
+    ClassicEditor
+        .create(document.querySelector('#editor'))
+        .then(editor => {
+            if (content) {
+                editor.setData(content);
+            }
+        })
+        .catch(error => {
+            console.error(error);
+        });
 }
+
 const handleDeleteNews = async (id) => {
     if (!confirm('確定要刪除此筆資料？')) return;
 
@@ -35,7 +31,18 @@ const handleDeleteNews = async (id) => {
 
 const setNewsList = (data) => {
     let html = '';
-    data.forEach(item => {
+
+    if (data.data.length == 0) {
+        html = `
+            <tr>
+                <td colspan="5" class="text-center">查無資料</td>
+            </tr>
+        `;
+        $('tbody').html(html);
+        return;
+    }
+
+    data.data.forEach(item => {
         let statusBadge;
         if (item.status == 0) {
             statusBadge = '<span class="badge bg-danger">隱藏</span>';
@@ -53,7 +60,7 @@ const setNewsList = (data) => {
               <td>${item.menu.name}</td>
               <td>${item.title}</td>
               <td>${statusBadge}</td>
-              <td class="d-flex">
+              <td class="d-flex justify-content-center">
                 <a class="btn btn-warning me-3" href=${"/news/edit/" + item._id}>修改</a>
                 <button type="button" class="btn btn-danger delete-btn" id=${item._id}>刪除</button>
               </td>
@@ -61,11 +68,60 @@ const setNewsList = (data) => {
           `;
     });
     $('tbody').html(html);
-    initDataTable();
     $('.delete-btn').on('click', function () {
         const id = $(this).attr('id');
         handleDeleteNews(id);
     })
+}
+
+const setPagination = (data) => {
+    $('#dataCount').text(data.total);
+    $('#perPage').val(data.per_page);
+    let html = '';
+    if (data.total == 0) {
+        $('#pagination').html(html);
+        return;
+    }
+    let page = data.current_page;
+    let totalPage = data.last_page;
+    let prevPage = page - 1;
+    let nextPage = page + 1;
+    let prevDisabled = page == 1 ? 'disabled' : '';
+    let nextDisabled = page == totalPage ? 'disabled' : '';
+    const originalUrl = new URL(window.location.href);
+    const searchParams = new URLSearchParams(originalUrl.search);
+
+    let prevHtml = `
+        <li class="page-item ${prevDisabled}">
+            <a class="page-link" href="${updatePageQueryParam(searchParams, prevPage)}" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+    `;
+
+    let nextHtml = `
+        <li class="page-item ${nextDisabled}">
+            <a class="page-link" href="${updatePageQueryParam(searchParams, nextPage)}" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+    `;
+
+    let pageHtml = '';
+    for (let i = 1; i <= totalPage; i++) {
+        let active = page == i ? 'active' : '';
+        pageHtml += `
+            <li class="page-item ${active}"><a class="page-link" href="${updatePageQueryParam(searchParams, i)}">${i}</a></li>
+        `;
+    }
+
+    function updatePageQueryParam(searchParams, newPage) {
+        searchParams.set('page', newPage);
+        return `${originalUrl.pathname}?${searchParams.toString()}${originalUrl.hash}`;
+    }
+
+    html = prevHtml + pageHtml + nextHtml;
+    $('#pagination').html(html);
 }
 
 const getUrlId = () => {
@@ -84,9 +140,19 @@ const getMenu = async () => {
 }
 
 const submitForm = async () => {
-    let data = $('#newForms').serialize();
+    await new Promise(resolve => setTimeout(resolve, 100));
+
+    let formData = new FormData(document.getElementById('newForms'));
+    let imageFile = document.getElementById('coverUpload').files[0];
+    formData.append('image', imageFile);
+
     try {
-        const res = await axios.post('/api/news', data);
+        const res = await axios.post('/api/news', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
+
         alert('新增成功');
         window.location.href = '/news';
     } catch (err) {
@@ -95,10 +161,22 @@ const submitForm = async () => {
     }
 }
 
+
 const updateForm = async () => {
-    let data = $('#newForms').serialize();
+    await new Promise(resolve => setTimeout(resolve, 100));
+
+    let formData = new FormData(document.getElementById('newForms'));
+    let imageFile = document.getElementById('coverUpload').files[0];
+    if (imageFile) {
+        formData.append('image', imageFile);
+    }
     try {
-        const res = await axios.put('/api/news/' + getUrlId(), data);
+        const newsId = getUrlId();
+        const res = await axios.post(`/api/news/${newsId}`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        });
         alert('更新成功');
         window.location.href = '/news';
     } catch (err) {
@@ -109,7 +187,6 @@ const updateForm = async () => {
 
 const setAreaOption = (data) => {
     var areaSelect = $('select[name="area-ui"]');
-    areaSelect.append("<option disabled selected>請選擇區域</option>");
     if (Array.isArray(data)) {
         data.forEach(function (area) {
             var option = $('<option>').attr('value', area._id).text(area.name);
@@ -120,7 +197,6 @@ const setAreaOption = (data) => {
 
 const setMenuOption = (data) => {
     var menuSelect = $('select[name="menu"]');
-    menuSelect.append("<option disabled selected>請選擇選單</option>");
     if (Array.isArray(data)) {
         data.forEach(function (menu) {
             var option = $('<option>').attr('value', menu._id).text(menu.name);
@@ -149,7 +225,6 @@ const setAreaOnChangeListner = () => {
 
 const getNewsById = async (id) => {
     const news = await axios.get(`/api/news/${id}`);
-    console.log(news.data);
     return news.data;
 }
 
@@ -172,10 +247,84 @@ const setNewsFormData = (data) => {
         $('#statusHide').prop('checked', true);
     }
     $('input[name="title"]').val(data.title);
-    $('textarea[name="content"]').val(data.content);
     $('select[name="menu"]').val(data.menu._id);
     areaSelect = data.area;
     $('#result').html(areaSelect.map(area => `<span class="badge bg-secondary me-2 mt-4" style="cursor: pointer;" onClick="handleBadgeClickRemove('${area._id}')">${area.name} X</span>`).join(''));
     const idArray = areaSelect.map(obj => obj._id);
     $('input[name="area"]').val(idArray.join(','));
+
+    if (data.cover) {
+        const domain = window.location.origin;
+        const coverUrl = `${domain}/images/${data.cover}`;
+        $('#coverPreview').attr('src', coverUrl);
+    }
+}
+
+const getUrlQuery = () => {
+    const url = window.location.href;
+    const params = url.substring(url.lastIndexOf('?') + 1).split('&');
+    const query = {};
+    params.forEach(param => {
+        const [key, value] = param.split('=');
+        if (key === 'title') {
+            query[key] = decodeURIComponent(value);
+            return;
+        }
+        query[key] = value;
+    });
+    return query;
+}
+
+const handleQuery = async () => {
+    const params = {
+        areaId: $('#area').val(),
+        menuId: $('#menu').val(),
+        status: $('#status').val(),
+        perPage: $('#perPage').val(),
+        title: $('#title').val(),
+    };
+
+    const queryParams = [];
+
+    for (const [key, value] of Object.entries(params)) {
+        if (value !== "all" && value) {
+            queryParams.push(`${key}=${value}`);
+        }
+    }
+
+    const url = queryParams.length > 0
+        ? `/news?${queryParams.join('&')}`
+        : '/news';
+
+    window.location.href = url;
+
+}
+
+const setQueryForm = (query) => {
+    if (query.areaId) {
+        $('#area').val(query.areaId);
+    }
+
+    if (query.menuId) {
+        $('#menu').val(query.menuId);
+    }
+
+    if (query.status) {
+        $('#status').val(query.status);
+    }
+
+    if (query.title) {
+        $('#title').val(query.title);
+    }
+}
+
+const setCoverUploadListener = () => {
+    $('#coverUpload').on('change', function () {
+        const file = $(this)[0].files[0];
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            $('#coverPreview').attr('src', e.target.result);
+        }
+        reader.readAsDataURL(file);
+    });
 }

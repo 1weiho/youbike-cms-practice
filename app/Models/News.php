@@ -18,6 +18,7 @@ class News extends Model
         'status',
         'title',
         'content',
+        'cover',
     ];
 
     public function area()
@@ -29,13 +30,12 @@ class News extends Model
         }
 
         return Area::whereIn('_id', $areaIds)->get();
-
     }
 
     public function menu()
     {
         $menuId = $this->menu_id;
-        
+
         return Menu::where('_id', $menuId)->first();
     }
 }

@@ -3,19 +3,43 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\NewsRequest;
-use App\Models\Area;
-use App\Models\Menu;
 use App\Models\News;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
 class NewsController extends Controller
 {
     // list all news
-    public function index()
+    public function index(Request $request)
     {
-        $collection = News::all();
+        $query = News::query();
+        $perPage = 10;
+
+        if ($request->has('menuId')) {
+            $menu = $request->input('menuId');
+            $query->where('menu_id', '=', $menu);
+        }
+
+        if ($request->has('areaId')) {
+            $area = $request->input('areaId');
+            $query->where('area_id', '=', $area);
+        }
+
+        if ($request->has('status')) {
+            $status = $request->input('status');
+            $query->where('status', '=', $status);
+        }
+
+        if ($request->has('title')) {
+            $title = $request->input('title');
+            $query->where('title', 'like', '%' . $title . '%');
+        }
+
+        if ($request->has('perPage')) {
+            $perPage = $request->input('perPage');
+        }
+
+        $collection = $query->paginate($perPage);
 
         // add $collection[]->area and $collection[]->menu to $collection
         foreach ($collection as $key => $value) {
@@ -42,6 +66,13 @@ class NewsController extends Controller
         $title = $request->input('title');
         $content = $request->input('content');
 
+        if ($request->image) {
+            $imageName = time() . '.' . $request->image->extension();
+            $request->image->move(public_path('images'), $imageName);
+        } else {
+            $imageName = '';
+        }
+
         try {
             News::create([
                 'area_id' => $area,
@@ -50,7 +81,8 @@ class NewsController extends Controller
                 'end_at' => $end_at,
                 'status' => $status,
                 'title' => $title,
-                'content' => $content
+                'content' => $content,
+                'cover' => $imageName
             ]);
             return response()->json(['status' => 'success', 'message' => 'News added successfully!']);
         } catch (ValidationException $e) {
@@ -69,7 +101,7 @@ class NewsController extends Controller
     }
 
     // edit a news by id
-    public function update(NewsRequest $request, $id)
+    public function modify(NewsRequest $request, $id)
     {
         $areaString = $request->input('area');
         if ($areaString == '') {
@@ -84,6 +116,13 @@ class NewsController extends Controller
         $title = $request->input('title');
         $content = $request->input('content');
 
+        if ($request->image) {
+            $imageName = time() . '.' . $request->image->extension();
+            $request->image->move(public_path('images'), $imageName);
+        } else {
+            $imageName = News::find($id)->cover;
+        }
+
         try {
             News::where('_id', $id)->update([
                 'area_id' => $area,
@@ -92,7 +131,8 @@ class NewsController extends Controller
                 'end_at' => $end_at,
                 'status' => $status,
                 'title' => $title,
-                'content' => $content
+                'content' => $content,
+                'cover' => $imageName
             ]);
             return response()->json(['status' => 'success', 'message' => 'News updated successfully!']);
         } catch (ValidationException $e) {

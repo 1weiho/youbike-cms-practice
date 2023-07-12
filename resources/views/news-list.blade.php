@@ -8,7 +8,6 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.css" />
   <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
   <script src="/js/news.js"></script>
@@ -23,8 +22,44 @@
       <div class="d-flex justify-content-end mb-3">
         <a class="btn btn-primary" href="/news/add">新增</a>
       </div>
+      <div class="d-flex mb-3">
+        <div class="d-flex align-items-center me-4">
+          <label class="me-2">選單</label>
+          <select class="form-select form-select-lg" name="menu" id="menu">
+            <option value="all">全部</option>
+          </select>
+        </div>
+        <div class="d-flex align-items-center me-4">
+          <label class="me-2">區域</label>
+          <select class="form-select form-select-lg" name="area-ui" id="area">
+            <option value="all">全部</option>
+          </select>
+        </div>
+        <div class="d-flex align-items-center me-4">
+          <label class="me-2">狀態</label>
+          <select class="form-select form-select-lg" name="status" id="status">
+            <option value="all">全部</option>
+            <option value="1">顯示</option>
+            <option value="0">隱藏</option>
+          </select>
+        </div>
+        <div class="d-flex align-items-center me-4">
+          <label class="me-2">標題</label>
+          <input type="text" class="form-control form-control-lg" placeholder="請輸入標題" name="title" id="title" />
+        </div>
+        <div class="d-flex align-items-center me-4">
+          <label class="me-2">每頁筆數</label>
+          <select class="form-select form-select-lg" name="perPage" id="perPage">
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+          </select>
+        </div>
+        <button class="btn btn-info ms-3" id="search" onclick="handleQuery()">搜尋</button>
+      </div>
       <div>
-        <table id="myTable" class="display">
+        <table id="myTable" class="table table-striped text-center table-bordered">
           <thead>
             <tr>
               <th>區域</th>
@@ -37,6 +72,13 @@
           <tbody></tbody>
         </table>
       </div>
+      <div class="d-flex justify-content-between">
+        <p><span id="dataCount"></span> 筆資料</p>
+        <nav aria-label="Page navigation example">
+          <ul class="pagination" id="pagination">
+          </ul>
+        </nav>
+      </div>
     </div>
   </div>
 </x-layout>
@@ -45,7 +87,14 @@
 
 <script>
   $(document).ready(async function () {
-    const news = await getNews();
-    setNewsList(news);
+    const urlQuery = getUrlQuery();
+    const data = await getNews(urlQuery);
+    setNewsList(data);
+    const menu = await getMenu();
+    setMenuOption(menu);
+    const area = await getArea();
+    setAreaOption(area);
+    setPagination(data);
+    setQueryForm(urlQuery);
   });
 </script>

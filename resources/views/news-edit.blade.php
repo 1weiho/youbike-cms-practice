@@ -12,22 +12,37 @@
     integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous">
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
+  <script src="https://cdn.ckeditor.com/ckeditor5/38.1.0/classic/ckeditor.js"></script>
   <script src="/js/news.js"></script>
 </head>
 <title>最新消息 - 修改</title>
 </head>
 
 <x-layout>
-  <div class="p-5">
+  <div class="py-4 px-5">
     <h1>最新消息 - 修改</h1>
-    <div class="d-flex h-full justify-content-end rounded bg-white p-5 mt-3 d-flex flex-column">
+    <div class="d-flex h-full rounded bg-white p-5 pt-3 mt-3 d-flex flex-column overflow-y-scroll"
+      style="max-height: 88vh;">
       <form id="newForms" onsubmit="updateForm(); return false;">
+        <div class="row form-outline mt-3">
+          <div class="col-1 d-flex justify-content-end align-items-center pe-3">
+            <h5 class="fw-medium">封面圖片</h5>
+          </div>
+          <div class="col-11">
+            <input type="file" class="form-control form-control-lg" id="coverUpload" name="cover"
+              accept="image/png, image/jpeg, image/jpg" />
+            <div class="mt-3">
+              <img id="coverPreview" style="max-width: 100%; max-height: 200px;">
+            </div>
+          </div>
+        </div>
         <div class="row form-outline mt-3">
           <div class="col-1 d-flex justify-content-end align-items-center pe-3">
             <h5 class="fw-medium">區域</h5>
           </div>
           <div class="col-11">
             <select class="form-select form-select-lg" name="area-ui">
+              <option disabled selected>請選擇區域</option>
             </select>
             <input type="hidden" name="area">
             <p id="result"></p>
@@ -39,6 +54,7 @@
           </div>
           <div class="col-11">
             <select class="form-select form-select-lg" name="menu">
+              <option disabled selected>請選擇選單</option>
             </select>
           </div>
         </div>
@@ -82,7 +98,7 @@
             <h5 class="fw-medium">內容</h5>
           </div>
           <div class="col-11">
-            <textarea class="form-control form-control-lg" placeholder="內容" name="content" rows="6"></textarea>
+            <textarea name="content" id="editor"></textarea>
           </div>
         </div>
         <div class="d-flex justify-content-center mt-3">
@@ -107,5 +123,7 @@
     setMenuOption(menu);
     setNewsFormData(news);
     setAreaOnChangeListner();
+    await initEditor(news.content);
+    setCoverUploadListener();
   });
 </script>
