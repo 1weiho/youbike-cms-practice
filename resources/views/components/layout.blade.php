@@ -24,6 +24,11 @@
                         最新消息
                     </a>
                 </li>
+                <li class="mb-3">
+                    <a href="/admin" class="nav-link{{ Request::is('admin') ? ' active' : '' }} text-white">
+                        管理者設定
+                    </a>
+                </li>
             </ul>
             <hr>
             <span>

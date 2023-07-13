@@ -53,3 +53,22 @@ Route::group(['prefix' => 'news'], function () {
         return view('news-edit');
     });
 });
+
+Route::group(['prefix' => 'admin'], function () {
+    Route::get('/', function () {
+        return view('admin-list');
+    });
+    Route::get('/add', function () {
+        return view('admin-add');
+    });
+    Route::get('/edit/{id}', function () {
+        return view('admin-edit');
+    });
+    Route::get('/reset-password/{id}', function () {
+        return view('admin-reset-password');
+    });
+});
+
+Route::get('/login', function () {
+    return view('login');
+});
