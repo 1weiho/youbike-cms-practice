@@ -7,6 +7,7 @@ use App\Http\Requests\ResetPasswordRequest;
 use App\Http\Requests\UpdateAdminRequest;
 use App\Models\Admin;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
@@ -86,7 +87,7 @@ class AdminController extends Controller
     public function resetPassword(ResetPasswordRequest $request, $id)
     {
         $admin = Admin::find($id);
-        
+
         $request->merge(['password' => bcrypt($request->password)]);
         $admin->password = $request->password;
         $admin->save();
@@ -103,5 +104,32 @@ class AdminController extends Controller
     {
         Admin::destroy($id);
         return response()->json(['message' => 'Admin deleted successfully', 'status' => 200]);
+    }
+
+    public function login(Request $request)
+    {
+        $request->validate([
+            'username' => 'required',
+            'password' => 'required',
+        ], [
+            'username.required' => '請填入帳號',
+            'password.required' => '請填入密碼',
+        ]);
+        $credentials = $request->only('username', 'password');
+        if (Auth::attempt($credentials)) {
+            return redirect()->intended('/');
+        } else {
+            if (Admin::where('username', $credentials['username'])->exists()) {
+                return redirect()->back()->withErrors(['password' => '密碼錯誤'])->withInput($request->except('password'));
+            } else {
+                return redirect()->back()->withErrors(['username' => '帳號不存在'])->withInput($request->except('password'));
+            }
+        }
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+        return redirect()->route('admin.login');
     }
 }

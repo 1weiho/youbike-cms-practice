@@ -18,7 +18,8 @@
     <div class="d-flex flex-column align-items-center justify-content-center">
         <h2 class="mb-5">YouBike 官網後台系統</h2>
         <div class="bg-white rounded p-3 shadow-sm" style="width: 35vw;">
-            <form class="p-5 d-flex flex-column align-items-center">
+            <form method="POST" action="{{ route('admin.login') }}" class="p-5 d-flex flex-column align-items-center">
+                @csrf
                 <h5 class="mb-4">請輸入帳號密碼登入系統</h5>
                 <div class="form-outline mb-4 w-100">
                     <select class="form-select w-100">
@@ -28,10 +29,17 @@
                     </select>
                 </div>
                 <div class="form-outline mb-4 w-100">
-                    <input type="email" placeholder="請輸入帳號" class="form-control" />
+                    <input type="text" name="username" placeholder="請輸入帳號" value="{{ old('username') }}"
+                        class="form-control" />
+                    @if ($errors->has('username'))
+                    <span class="text-danger">{{ $errors->first('username') }}</span>
+                    @endif
                 </div>
                 <div class="form-outline mb-4 w-100">
-                    <input type="password" placeholder="請輸入密碼" class="form-control" />
+                    <input type="password" name="password" placeholder="請輸入密碼" class="form-control" />
+                    @if ($errors->has('password'))
+                    <span class="text-danger">{{ $errors->first('password') }}</span>
+                    @endif
                 </div>
                 <button type="submit" class="btn btn-primary btn-block">登入</button>
             </form>

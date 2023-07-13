@@ -31,8 +31,9 @@
                 </li>
             </ul>
             <hr>
-            <span>
-                版本 v{{ config('versions.version') }}
+            <span class="d-flex justify-content-between align-items-center">
+                <p class="m-0">版本 v{{ config('versions.version') }}</p>
+                <a href="/logout" class="text-white text-decoration-none">登出</a>
             </span>
         </div>
         <div class="w-100" style="max-height: 100vh">
