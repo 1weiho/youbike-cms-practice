@@ -14,33 +14,35 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
   <script src="/js/admin.js"></script>
 </head>
-<title>管理者設定 - 修改密碼</title>
+<title>{{ __('lang.adminSetting') }} - {{ __('lang.modifyPassword') }}</title>
 </head>
 
 <x-layout>
   <div class="py-4 px-5">
-    <h2>管理者設定 - 修改密碼</h2>
+    <h2>{{ __('lang.adminSetting') }} - {{ __('lang.modifyPassword') }}</h2>
     <div class="d-flex h-full rounded bg-white p-5 pt-3 mt-3 d-flex flex-column" style="max-height: 88vh;">
       <form id="newForms" onsubmit="submitResetPasswordForm(event)">
         <div class="row form-outline mt-3">
           <div class="col-1 d-flex justify-content-end align-items-center pe-3">
-            <h5 class="fw-medium">密碼</h5>
+            <h5 class="fw-medium">{{ __('lang.password') }}</h5>
           </div>
           <div class="col-11">
-            <input type="password" class="form-control form-control-lg" placeholder="密碼" name="password" />
+            <input type="password" class="form-control form-control-lg" placeholder="{{ __('lang.password') }}"
+              name="password" />
           </div>
         </div>
         <div class="row form-outline mt-3">
           <div class="col-1 d-flex justify-content-end align-items-center pe-3">
-            <h5 class="fw-medium">確認密碼</h5>
+            <h5 class="fw-medium">{{ __('lang.confirmPassword') }}</h5>
           </div>
           <div class="col-11">
-            <input type="password" class="form-control form-control-lg" placeholder="確認密碼" name="confirmPassword" />
+            <input type="password" class="form-control form-control-lg" placeholder="{{ __('lang.confirmPassword') }}"
+              name="confirmPassword" />
           </div>
         </div>
         <div class="d-flex justify-content-center mt-3">
-          <button type="submit" class="btn btn-warning me-3">修改</button>
-          <a class="btn btn-light" href="/admin">返回</a>
+          <button type="submit" class="btn btn-warning me-3">{{ __('lang.modify') }}</button>
+          <a class="btn btn-light" href="/admin">{{ __('lang.back') }}</a>
         </div>
       </form>
     </div>
@@ -50,6 +52,7 @@
 </html>
 
 <script>
+  const __ = {!! $lang !!};
   $(document).ready(async function () {
     await initEditForm();
   });

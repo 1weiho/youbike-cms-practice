@@ -21,12 +21,12 @@ class UpdateAdminRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => '請填入姓名',
-            'name.regex' => '姓名僅能輸入中文、英文及空白，且長度為 3-10 個字元',
-            'email.required' => '請填入信箱',
-            'email.email' => '信箱格式錯誤',
-            'email.max' => '信箱長度不能超過 50 個字元',
-            'status.required' => '請填入狀態'
+            'name.required' => __('lang.name.required'),
+            'name.regex' => __('lang.name.regex'),
+            'email.required' => __('lang.email.required'),
+            'email.email' => __('lang.email.email'),
+            'email.max' => __('lang.email.max'),
+            'status.required' => __('lang.status.required'),
         ];
     }
 }

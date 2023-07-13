@@ -13,26 +13,26 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
   <script src="/js/admin.js"></script>
 </head>
-<title>管理者設定</title>
+<title>{{ __('lang.adminSetting') }}</title>
 </head>
 
 <x-layout>
   <div class="py-4 px-5">
-    <h2>管理者設定</h2>
+    <h2>{{ __('lang.adminSetting') }}</h2>
     <div class="d-flex h-full justify-content-end rounded bg-white p-3 mt-3 d-flex flex-column">
       <div class="d-flex justify-content-end mb-3">
-        <a class="btn btn-primary" href="/admin/add">新增</a>
+        <a class="btn btn-primary" href="/admin/add">{{ __('lang.add') }}</a>
       </div>
       <div>
         <table id="adminList" class="display">
           <thead>
             <tr>
-              <th>帳號</th>
-              <th>姓名名稱</th>
-              <th>建立時間</th>
-              <th>修改時間</th>
-              <th>狀態</th>
-              <th>操作</th>
+              <th>{{ __('lang.username') }}</th>
+              <th>{{ __('lang.name') }}</th>
+              <th>{{ __('lang.createAt') }}</th>
+              <th>{{ __('lang.updateAt') }}</th>
+              <th>{{ __('lang.status') }}</th>
+              <th>{{ __('lang.operation') }}</th>
             </tr>
           </thead>
           <tbody>
@@ -46,6 +46,7 @@
 </html>
 
 <script>
+  const __ = {!! $lang !!};
   $(document).ready(async function () {
     initDataTable();
     const adminList = await fetchAdminList();

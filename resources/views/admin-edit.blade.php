@@ -14,61 +14,63 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
   <script src="/js/admin.js"></script>
 </head>
-<title>管理者設定 - 修改</title>
+<title>{{ __('lang.adminSetting') }} - {{ __('lang.modify') }}</title>
 </head>
 
 <x-layout>
   <div class="py-4 px-5">
-    <h2>管理者設定 - 修改</h2>
+    <h2>{{ __('lang.adminSetting') }} - {{ __('lang.modify') }}</h2>
     <div class="d-flex h-full rounded bg-white p-5 pt-3 mt-3 d-flex flex-column" style="max-height: 88vh;">
       <form id="newForms" onsubmit="submitEditForm(event)">
         <div class="row form-outline mt-3">
           <div class="col-1 d-flex justify-content-end align-items-center pe-3">
-            <h5 class="fw-medium">帳號</h5>
+            <h5 class="fw-medium">{{ __('lang.username') }}</h5>
           </div>
           <div class="col-11">
-            <input type="text" class="form-control form-control-lg" placeholder="帳號" name="username" id="username"
-              disabled />
+            <input type="text" class="form-control form-control-lg" placeholder="{{ __('lang.username') }}"
+              name="username" id="username" disabled />
           </div>
         </div>
         <div class="row form-outline mt-3">
           <div class="col-1 d-flex justify-content-end align-items-center pe-3">
-            <h5 class="fw-medium">密碼</h5>
+            <h5 class="fw-medium">{{ __('lang.password') }}</h5>
           </div>
           <div class="col-11">
-            <a class="btn btn-warning" id="resetPasswordLink">修改密碼</a>
+            <a class="btn btn-warning" id="resetPasswordLink">{{ __('lang.modifyPassword') }}</a>
           </div>
         </div>
         <div class="row form-outline mt-3">
           <div class="col-1 d-flex justify-content-end align-items-center pe-3">
-            <h5 class="fw-medium">姓名名稱</h5>
+            <h5 class="fw-medium">{{ __('lang.name') }}</h5>
           </div>
           <div class="col-11">
-            <input type="text" class="form-control form-control-lg" placeholder="姓名名稱" name="name" id="name" />
+            <input type="text" class="form-control form-control-lg" placeholder="{{ __('lang.name') }}" name="name"
+              id="name" />
           </div>
         </div>
         <div class="row form-outline mt-3">
           <div class="col-1 d-flex justify-content-end align-items-center pe-3">
-            <h5 class="fw-medium">電子郵件</h5>
+            <h5 class="fw-medium">{{ __('lang.email') }}</h5>
           </div>
           <div class="col-11">
-            <input type="email" class="form-control form-control-lg" placeholder="電子郵件" name="email" id="email" />
+            <input type="email" class="form-control form-control-lg" placeholder="{{ __('lang.email') }}" name="email"
+              id="email" />
           </div>
         </div>
         <div class="row form-outline mt-3">
           <div class="col-1 d-flex justify-content-end align-items-center pe-3">
-            <h5 class="fw-medium">狀態</h5>
+            <h5 class="fw-medium">{{ __('lang.status') }}</h5>
           </div>
           <div class="col-11">
             <input type="radio" name="status" value="1">
-            <label class="text-success me-3">啟用</label>
+            <label class="text-success me-3">{{ __('lang.enable') }}</label>
             <input type="radio" name="status" value="0">
-            <label class="text-danger">禁用</label>
+            <label class="text-danger">{{ __('lang.disable') }}</label>
           </div>
         </div>
         <div class="d-flex justify-content-center mt-3">
-          <button type="submit" class="btn btn-warning me-3">修改</button>
-          <a class="btn btn-light" href="/admin">返回</a>
+          <button type="submit" class="btn btn-warning me-3">{{ __('lang.modify') }}</button>
+          <a class="btn btn-light" href="/admin">{{ __('lang.back') }}</a>
         </div>
       </form>
     </div>
@@ -78,6 +80,7 @@
 </html>
 
 <script>
+  const __ = {!! $lang !!};
   $(document).ready(async function () {
     await initEditForm();
   });

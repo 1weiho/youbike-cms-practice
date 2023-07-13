@@ -14,9 +14,8 @@ class CreateAdminRequest extends FormRequest
         return [
             'username' => 'required|unique:admin|regex:/^[A-Za-z0-9_-]{5,30}$/',
             'password' => 'required|regex:/^(?=.*[a-zA-Z])(?=.*\d).{8,20}$/',
-            'password' => 'required',
             'confirmPassword' => 'required|same:password',
-            'name' => 'required|regex:/^[\x7f-\xffA-Za-z\s]+$/',
+            'name' => 'required|regex:/^[\x7f-\xffA-Za-z\s]{3,10}+$/',
             'email' => 'required|unique:admin|email|max:50',
             'status' => 'required'
         ];
@@ -25,21 +24,21 @@ class CreateAdminRequest extends FormRequest
     public function messages()
     {
         return [
-            'username.required' => '請填入帳號',
-            'username.unique' => '帳號已存在',
-            'username.regex' => '帳號僅能輸入數字、英文及_-符號，且長度為 5-30 個字元',
-            'username.max' => '帳號長度不能超過 255 個字元',
-            'password.required' => '請填入密碼',
-            'password.regex' => '密碼必須包含英文及數字，且長度為 8-20 個字元',
-            'confirmPassword.required' => '請填入確認密碼',
-            'confirmPassword.same' => '確認密碼與密碼不相符',
-            'name.required' => '請填入姓名',
-            'name.regex' => '姓名僅能輸入中文、英文及空白，且長度為 3-10 個字元',
-            'email.required' => '請填入信箱',
-            'email.unique' => '信箱已存在',
-            'email.email' => '信箱格式錯誤',
-            'email.max' => '信箱長度不能超過 50 個字元',
-            'status.required' => '請填入狀態'
+            'username.required' => __('lang.username.required'),
+            'username.unique' => __('lang.username.unique'),
+            'username.regex' => __('lang.username.regex'),
+            'username.max' => __('lang.username.max'),
+            'password.required' => __('lang.password.required'),
+            'password.regex' => __('lang.password.regex'),
+            'confirmPassword.required' => __('lang.confirmPassword.required'),
+            'confirmPassword.same' => __('lang.confirmPassword.same'),
+            'name.required' => __('lang.name.required'),
+            'name.regex' => __('lang.name.regex'),
+            'email.required' => __('lang.email.required'),
+            'email.unique' => __('lang.email.unique'),
+            'email.email' => __('lang.email.email'),
+            'email.max' => __('lang.email.max'),
+            'status.required' => __('lang.status.required')
         ];
     }
 }

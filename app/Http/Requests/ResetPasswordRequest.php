@@ -20,10 +20,10 @@ class ResetPasswordRequest extends FormRequest
     public function messages()
     {
         return [
-            'password.required' => '請填入密碼',
-            'password.regex' => '密碼必須包含英文及數字，且長度為 8-20 個字元',
-            'confirmPassword.required' => '請填入確認密碼',
-            'confirmPassword.same' => '確認密碼與密碼不相符',
+            'password.required' => __('lang.password.required'),
+            'password.regex' => __('lang.password.regex'),
+            'confirmPassword.required' => __('lang.confirmPassword.required'),
+            'confirmPassword.same' => __('lang.confirmPassword.same'),
         ];
     }
 }
