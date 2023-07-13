@@ -27,21 +27,21 @@ class NewsRequest extends FormRequest
     public function messages()
     {
         return [
-            'area.required' => '請填入區域',
-            'menu.required' => '請填入選單',
-            'start_at.required' => '請填入開始時間',
-            'start_at.date' => '開始時間必須是一個有效日期',
-            'end_at.required' => '請填入結束時間',
-            'end_at.date' => '結束時間必須是一個有效日期',
-            'end_at.after' => '結束時間必須大於開始時間',
-            'status.required' => '請填入狀態',
-            'status.numeric' => '狀態必須是顯示或隱藏',
-            'status.in' => '狀態必須是顯示或隱藏',
-            'title.required' => '請填入標題',
-            'content.required' => '請填入內容',
-            'cover.image' => '封面必須是一個圖片',
-            'cover.mimes' => '封面必須是 png, jpeg, jpg 格式',
-            'cover.max' => '封面大小不能超過 2MB',
+            'area.required' => __('lang.area.required'),
+            'menu.required' => __('lang.menu.required'),
+            'start_at.required' => __('lang.start_at.required'),
+            'start_at.date' => __('lang.start_at.date'),
+            'end_at.required' => __('lang.end_at.required'),
+            'end_at.date' => __('lang.end_at.date'),
+            'end_at.after' => __('lang.end_at.after'),
+            'status.required' => __('lang.status.required'),
+            'status.numeric' => __('lang.status.numeric'),
+            'status.in' => __('lang.status.in'),
+            'title.required' => __('lang.title.required'),
+            'content.required' => __('lang.content.required'),
+            'cover.image' => __('lang.cover.image'),
+            'cover.mimes' => __('lang.cover.mimes'),
+            'cover.max' => __('lang.cover.max'),
         ];
     }
 }

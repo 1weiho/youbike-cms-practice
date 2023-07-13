@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AreaController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\NewsController;
@@ -25,3 +26,6 @@ Route::apiResource('news', NewsController::class);
 Route::post('news/{id}', [NewsController::class, 'modify']);
 Route::get('menu', [MenuController::class, 'index']);
 Route::get('area', [AreaController::class, 'index']);
+
+Route::apiResource('admin', AdminController::class);
+Route::post('admin/reset-password/{id}', [AdminController::class, 'resetPassword']);

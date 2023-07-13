@@ -11,22 +11,22 @@
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.css" />
   <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.js"></script>
 </head>
-<title>區域</title>
+<title>{{ __('lang.area') }}</title>
 </head>
 
 <x-layout>
   <div class="py-4 px-5">
-    <h2>區域</h2>
+    <h2>{{ __('lang.area') }}</h2>
     <div class="d-flex h-full justify-content-end rounded bg-white p-3 mt-3 d-flex flex-column">
       <div class="d-flex justify-content-end mb-3">
-        <a class="btn btn-primary" href="/area/add">新增</a>
+        <a class="btn btn-primary" href="/area/add">{{ __('lang.add') }}</a>
       </div>
       <div>
         <table id="myTable" class="display">
           <thead>
             <tr>
-              <th>區域名稱</th>
-              <th>操作</th>
+              <th>{{ __('lang.areaName') }}</th>
+              <th>{{ __('lang.operation') }}</th>
             </tr>
           </thead>
           <tbody>
@@ -35,12 +35,12 @@
             <tr>
               <td>{{ $item->name }}</td>
               <td class="d-flex">
-                <a class="btn btn-warning me-3" href={{ "/area/edit/" . $item->_id }}>修改</a>
+                <a class="btn btn-warning me-3" href={{ "/area/edit/" . $item->_id }}>{{ __('lang.modify') }}</a>
                 <form id="delete-form-{{ $item->_id }}" action="{{ route('area.delete', ['id' => $item->_id]) }}"
                   method="POST">
                   @csrf
                   @method('DELETE')
-                  <button type="submit" class="btn btn-danger" onclick="return confirm('確定要刪除此區域嗎？')">刪除</button>
+                  <button type="submit" class="btn btn-danger" onclick="return confirm('{{ __('lang.confirmDeleteArea') }}')">{{ __('lang.delete') }}</button>
                 </form>
               </td>
             </tr>
@@ -64,17 +64,17 @@
   $(document).ready(function () {
     $('#myTable').DataTable({
       language: {
-        "lengthMenu": "每頁 _MENU_ 筆資料",
-        "info": "顯示第 _START_ 至 _END_ 項結果，共 _TOTAL_ 項",
+        "lengthMenu": "{{ __('lang.lengthMenu') }}",
+        "info": "{{ __('lang.info') }}",
         "paginate": {
-          "previous": "上一頁",
-          "next": "下一頁"
+          "previous": "{{ __('lang.previous') }}",
+          "next": "{{ __('lang.next') }}"
         },
-        "search": "查詢:",
-        "zeroRecords": "無符合資料",
-        "infoEmpty": "顯示第 0 至 0 項結果，共 0 項",
-        "emptyTable": "沒有資料",
-        "infoFiltered": "(從 _MAX_ 筆資料中過濾)",
+        "search": "{{ __('lang.searchTable') }}",
+        "zeroRecords": "{{ __('lang.zeroRecords') }}",
+        "infoEmpty": "{{ __('lang.infoEmpty') }}",
+        "emptyTable": "{{ __('lang.emptyTable') }}",
+        "infoFiltered": "{{ __('lang.infoFiltered') }}",
       }
     });
   });

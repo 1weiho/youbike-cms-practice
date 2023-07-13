@@ -8,19 +8,19 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 </head>
-<title>區域 - 修改</title>
+<title>{{ __('lang.area') }} - {{ __('lang.modify') }}</title>
 </head>
 
 <x-layout>
   <div class="p-5">
-    <h1>區域 - 修改</h1>
+    <h1>{{ __('lang.area') }} - {{ __('lang.modify') }}</h1>
     <div class="d-flex h-full justify-content-end rounded bg-white p-5 mt-5 d-flex flex-column">
-      <h3>區域名稱</h3>
+      <h3>{{ __('lang.areaName') }}</h3>
       <form action="{{ route('area.update', ['id' => $area->_id]) }}" method="POST">
         @csrf
         @method('PUT')
         <div class="form-outline mt-3">
-          <input type="text" class="form-control form-control-lg" placeholder="區域名稱" name="name" autofocus value={{
+          <input type="text" class="form-control form-control-lg" placeholder="{{ __('lang.areaName') }}" name="name" autofocus value={{
             $area->name }}
           />
         </div>
@@ -30,8 +30,8 @@
         </div>
         @enderror
         <div class="d-flex justify-content-center mt-3">
-          <button type="submit" class="btn btn-warning me-3">修改</button>
-          <a class="btn btn-light" href="/area">返回</a>
+          <button type="submit" class="btn btn-warning me-3">{{ __('lang.modify') }}</button>
+          <a class="btn btn-light" href="/area">{{ __('lang.back') }}</a>
         </div>
       </form>
     </div>

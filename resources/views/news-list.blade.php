@@ -12,43 +12,43 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
   <script src="/js/news.js"></script>
 </head>
-<title>最新消息</title>
+<title>{{ __('lang.news') }}</title>
 </head>
 
 <x-layout>
   <div class="py-4 px-5">
-    <h2>最新消息</h2>
+    <h2>{{ __('lang.news') }}</h2>
     <div class="d-flex h-full justify-content-end rounded bg-white p-3 mt-3 d-flex flex-column">
       <div class="d-flex justify-content-end mb-3">
-        <a class="btn btn-primary" href="/news/add">新增</a>
+        <a class="btn btn-primary" href="/news/add">{{ __('lang.add') }}</a>
       </div>
       <div class="d-flex mb-3">
         <div class="d-flex align-items-center me-4">
-          <label class="me-2">選單</label>
+          <label class="me-2">{{ __('lang.menu') }}</label>
           <select class="form-select form-select-lg" name="menu" id="menu">
-            <option value="all">全部</option>
+            <option value="all">{{ __('lang.all') }}</option>
           </select>
         </div>
         <div class="d-flex align-items-center me-4">
-          <label class="me-2">區域</label>
+          <label class="me-2">{{ __('lang.area') }}</label>
           <select class="form-select form-select-lg" name="area-ui" id="area">
-            <option value="all">全部</option>
+            <option value="all">{{ __('lang.all') }}</option>
           </select>
         </div>
         <div class="d-flex align-items-center me-4">
-          <label class="me-2">狀態</label>
+          <label class="me-2">{{ __('lang.status') }}</label>
           <select class="form-select form-select-lg" name="status" id="status">
-            <option value="all">全部</option>
-            <option value="1">顯示</option>
-            <option value="0">隱藏</option>
+            <option value="all">{{ __('lang.all') }}</option>
+            <option value="1">{{ __('lang.display') }}</option>
+            <option value="0">{{ __('lang.hide') }}</option>
           </select>
         </div>
         <div class="d-flex align-items-center me-4">
-          <label class="me-2">標題</label>
-          <input type="text" class="form-control form-control-lg" placeholder="請輸入標題" name="title" id="title" />
+          <label class="me-2">{{ __('lang.title') }}</label>
+          <input type="text" class="form-control form-control-lg" placeholder="{{ __('lang.pleaseEnterTitle') }}" name="title" id="title" />
         </div>
         <div class="d-flex align-items-center me-4">
-          <label class="me-2">每頁筆數</label>
+          <label class="me-2">{{ __('lang.eachPageCount') }}</label>
           <select class="form-select form-select-lg" name="perPage" id="perPage">
             <option value="10">10</option>
             <option value="20">20</option>
@@ -56,24 +56,24 @@
             <option value="100">100</option>
           </select>
         </div>
-        <button class="btn btn-info ms-3" id="search" onclick="handleQuery()">搜尋</button>
+        <button class="btn btn-info ms-3" id="search" onclick="handleQuery()">{{ __('lang.search') }}</button>
       </div>
       <div>
         <table id="myTable" class="table table-striped text-center table-bordered">
           <thead>
             <tr>
-              <th>區域</th>
-              <th>選單</th>
-              <th>標題</th>
-              <th>狀態</th>
-              <th>操作</th>
+              <th>{{ __('lang.area') }}</th>
+              <th>{{ __('lang.menu') }}</th>
+              <th>{{ __('lang.title') }}</th>
+              <th>{{ __('lang.status') }}</th>
+              <th>{{ __('lang.operation') }}</th>
             </tr>
           </thead>
           <tbody></tbody>
         </table>
       </div>
       <div class="d-flex justify-content-between">
-        <p><span id="dataCount"></span> 筆資料</p>
+        <p><span id="dataCount"></span> {{ __('lang.count') }}</p>
         <nav aria-label="Page navigation example">
           <ul class="pagination" id="pagination">
           </ul>
@@ -86,6 +86,7 @@
 </html>
 
 <script>
+  const __ = {!! $lang !!};
   $(document).ready(async function () {
     const urlQuery = getUrlQuery();
     const data = await getNews(urlQuery);

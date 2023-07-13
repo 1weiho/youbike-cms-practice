@@ -19,13 +19,13 @@ const initEditor = async (content) => {
 }
 
 const handleDeleteNews = async (id) => {
-    if (!confirm('確定要刪除此筆資料？')) return;
+    if (!confirm(`${__['confirmDeleteData']}`)) return;
 
     const res = await axios.delete('/api/news/' + id);
     if (res.data.status == "success") {
         window.location.reload();
     } else {
-        alert('刪除失敗');
+        alert(`${__['deleteFail']}`);
     }
 }
 
@@ -35,7 +35,7 @@ const setNewsList = (data) => {
     if (data.data.length == 0) {
         html = `
             <tr>
-                <td colspan="5" class="text-center">查無資料</td>
+                <td colspan="5" class="text-center">${__['noSearchResult']}</td>
             </tr>
         `;
         $('tbody').html(html);
@@ -45,11 +45,11 @@ const setNewsList = (data) => {
     data.data.forEach(item => {
         let statusBadge;
         if (item.status == 0) {
-            statusBadge = '<span class="badge bg-danger">隱藏</span>';
+            statusBadge = `<span class="badge bg-danger">${__['hide']}</span>`;
         } else if (item.status == 1) {
-            statusBadge = '<span class="badge bg-success">顯示</span>';
+            statusBadge =  `<span class="badge bg-success">${__['display']}</span>`;
         } else {
-            statusBadge = '<span class="badge bg-warning">未知</span>';
+            statusBadge = `<span class="badge bg-warning">${__['unknown']}</span>`;
         }
 
         html += `
@@ -61,8 +61,8 @@ const setNewsList = (data) => {
               <td>${item.title}</td>
               <td>${statusBadge}</td>
               <td class="d-flex justify-content-center">
-                <a class="btn btn-warning me-3" href=${"/news/edit/" + item._id}>修改</a>
-                <button type="button" class="btn btn-danger delete-btn" id=${item._id}>刪除</button>
+                <a class="btn btn-warning me-3" href=${"/news/edit/" + item._id}>${__['modify']}</a>
+                <button type="button" class="btn btn-danger delete-btn" id=${item._id}>${__['delete']}</button>
               </td>
             </tr>
           `;
@@ -153,7 +153,7 @@ const submitForm = async () => {
             }
         });
 
-        alert('新增成功');
+        alert(`${__['addSuccess']}`);
         window.location.href = '/news';
     } catch (err) {
         const message = err.response.data.message;
@@ -177,7 +177,7 @@ const updateForm = async () => {
                 'Content-Type': 'multipart/form-data'
             }
         });
-        alert('更新成功');
+        alert(`${__['updateSuccess']}`);
         window.location.href = '/news';
     } catch (err) {
         const message = err.response.data.message;
