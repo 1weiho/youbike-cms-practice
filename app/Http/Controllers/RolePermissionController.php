@@ -2,16 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateRolePermissionRequest;
 use App\Models\RolePermission;
 use Illuminate\Http\Request;
 
 class RolePermissionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $collection = RolePermission::all();
@@ -27,34 +23,12 @@ class RolePermissionController extends Controller
         return response()->json($collection);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(CreateRolePermissionRequest $request)
     {
         RolePermission::create($request->all());
         return response()->json(['message' => 'Role permission created successfully', 'status' => 200]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\RolePermission  $rolePermission
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         $collection = RolePermission::find($id);
@@ -62,38 +36,23 @@ class RolePermissionController extends Controller
         return response()->json($collection);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\RolePermission  $rolePermission
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(RolePermission $rolePermission)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\RolePermission  $rolePermission
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
+
+        $request->validate([
+            'role_name' => 'unique:role_permission|min:3|max:15',
+        ], [
+            'role_name.unique' => '角色名稱已存在',
+            'role_name.min' => '角色名稱最少3個字',
+            'role_name.max' => '角色名稱最多15個字',
+        ]);
+
         $collection = RolePermission::find($id);
         $collection->update($request->all());
 
         return response()->json(['message' => 'Role permission updated successfully', 'status' => 200]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\RolePermission  $rolePermission
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         RolePermission::destroy($id);
