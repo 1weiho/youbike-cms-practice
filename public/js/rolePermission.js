@@ -36,11 +36,16 @@ const deleteRolePermission = async (id) => {
     const confirmDelete = confirm(__['confirmDeleteData']);
     if (!confirmDelete) return;
 
-    const res = await axios.delete('/api/role-permission/' + id);
-    if (res.data.status == 200) {
-        window.location.reload();
-    } else {
-        alert(__['deleteFail']);
+    try {
+        const res = await axios.delete('/api/role-permission/' + id);
+        if (res.data.status == 200) {
+            window.location.reload();
+        } else {
+            alert(__['deleteFail']);
+        }
+    } catch (err) {
+        const message = err.response.data.message;
+        alert(message);
     }
 }
 

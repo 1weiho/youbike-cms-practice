@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateRolePermissionRequest;
+use App\Models\Admin;
 use App\Models\RolePermission;
 use Illuminate\Http\Request;
 
@@ -59,6 +60,10 @@ class RolePermissionController extends Controller
 
     public function destroy($id)
     {
+        $adminCount = Admin::where('role_permission_id', $id)->count();
+        if ($adminCount > 0) {
+            return response()->json(['message' => __('lang.deleteFailByAdmin'), 'status' => 400], 400);
+        }
         RolePermission::destroy($id);
         return response()->json(['message' => 'Role Permission deleted successfully', 'status' => 200]);
     }

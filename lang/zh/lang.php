@@ -85,6 +85,7 @@ return [
     'rolePermission' => '角色權限',
     'useAccount' => '使用帳號',
     'permission' => '權限',
+    'deleteFailByAdmin' => '刪除失敗，此角色權限已被使用',
 
     // login
     'login' => '登入',

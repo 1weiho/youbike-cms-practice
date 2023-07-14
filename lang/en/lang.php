@@ -85,6 +85,7 @@ return [
     'rolePermission' => 'Role Permission',
     'useAccount' => 'Use Account',
     'permission' => 'Permission',
+    'deleteFailByAdmin' => 'Delete fail, this role permission is used by admin',
 
     // login
     'login' => 'Login',
