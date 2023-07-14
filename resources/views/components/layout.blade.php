@@ -29,6 +29,11 @@
                         {{ __('lang.adminSetting') }}
                     </a>
                 </li>
+                <li class="mb-3">
+                    <a href="/role-permission" class="nav-link{{ Request::is('role-permission') ? ' active' : '' }} text-white">
+                        {{ __('lang.rolePermission') }}
+                    </a>
+                </li>
             </ul>
             <span class="d-flex align-items-center">
                 <span class="me-2">{{ app()->getLocale() === 'zh' ? '語言：' : 'Language:' }}</span>

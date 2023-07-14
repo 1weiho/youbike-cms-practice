@@ -19,6 +19,14 @@ class Admin extends Model implements Authenticatable
         'password',
         'name',
         'email',
-        'status'
+        'status',
+        'role_permission_id',
     ];
+
+    public function role_permission()
+    {
+        $role_permission_id = $this->role_permission_id;
+
+        return RolePermission::where('_id', $role_permission_id)->first();
+    }
 }

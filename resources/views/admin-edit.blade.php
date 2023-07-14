@@ -12,6 +12,8 @@
     integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous">
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
   <script src="/js/admin.js"></script>
 </head>
 <title>{{ __('lang.adminSetting') }} - {{ __('lang.modify') }}</title>
@@ -23,49 +25,58 @@
     <div class="d-flex h-full rounded bg-white p-5 pt-3 mt-3 d-flex flex-column" style="max-height: 88vh;">
       <form id="newForms" onsubmit="submitEditForm(event)">
         <div class="row form-outline mt-3">
-          <div class="col-1 d-flex justify-content-end align-items-center pe-3">
+          <div class="col-2 d-flex justify-content-end align-items-center pe-3">
             <h5 class="fw-medium">{{ __('lang.username') }}</h5>
           </div>
-          <div class="col-11">
+          <div class="col-10">
             <input type="text" class="form-control form-control-lg" placeholder="{{ __('lang.username') }}"
               name="username" id="username" disabled />
           </div>
         </div>
         <div class="row form-outline mt-3">
-          <div class="col-1 d-flex justify-content-end align-items-center pe-3">
+          <div class="col-2 d-flex justify-content-end align-items-center pe-3">
             <h5 class="fw-medium">{{ __('lang.password') }}</h5>
           </div>
-          <div class="col-11">
+          <div class="col-10">
             <a class="btn btn-warning" id="resetPasswordLink">{{ __('lang.modifyPassword') }}</a>
           </div>
         </div>
         <div class="row form-outline mt-3">
-          <div class="col-1 d-flex justify-content-end align-items-center pe-3">
+          <div class="col-2 d-flex justify-content-end align-items-center pe-3">
             <h5 class="fw-medium">{{ __('lang.name') }}</h5>
           </div>
-          <div class="col-11">
+          <div class="col-10">
             <input type="text" class="form-control form-control-lg" placeholder="{{ __('lang.name') }}" name="name"
               id="name" />
           </div>
         </div>
         <div class="row form-outline mt-3">
-          <div class="col-1 d-flex justify-content-end align-items-center pe-3">
+          <div class="col-2 d-flex justify-content-end align-items-center pe-3">
             <h5 class="fw-medium">{{ __('lang.email') }}</h5>
           </div>
-          <div class="col-11">
+          <div class="col-10">
             <input type="email" class="form-control form-control-lg" placeholder="{{ __('lang.email') }}" name="email"
               id="email" />
           </div>
         </div>
         <div class="row form-outline mt-3">
-          <div class="col-1 d-flex justify-content-end align-items-center pe-3">
+          <div class="col-2 d-flex justify-content-end align-items-center pe-3">
             <h5 class="fw-medium">{{ __('lang.status') }}</h5>
           </div>
-          <div class="col-11">
+          <div class="col-10">
             <input type="radio" name="status" value="1">
             <label class="text-success me-3">{{ __('lang.enable') }}</label>
             <input type="radio" name="status" value="0">
             <label class="text-danger">{{ __('lang.disable') }}</label>
+          </div>
+        </div>
+        <div class="row form-outline mt-3">
+          <div class="col-2 d-flex justify-content-end align-items-center pe-3">
+            <h5 class="fw-medium">請選擇角色權限</h5>
+          </div>
+          <div class="col-10">
+            <select name="role_permission_id" class="select2 form-control form-control-lg" id="rolePermission">
+            </select>
           </div>
         </div>
         <div class="d-flex justify-content-center mt-3">
@@ -82,6 +93,8 @@
 <script>
   const __ = {!! $lang !!};
   $(document).ready(async function () {
+    const rolePermission = await fetchRolePermissionList();
+    setRolePermissionOption(rolePermission);
     await initEditForm();
   });
 </script>

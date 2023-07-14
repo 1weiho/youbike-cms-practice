@@ -17,7 +17,8 @@ class CreateAdminRequest extends FormRequest
             'confirmPassword' => 'required|same:password',
             'name' => 'required|regex:/^[\x7f-\xffA-Za-z\s]{3,10}+$/',
             'email' => 'required|unique:admin|email|max:50',
-            'status' => 'required'
+            'status' => 'required',
+            'role_permission_id' => 'required'
         ];
     }
 
@@ -38,7 +39,8 @@ class CreateAdminRequest extends FormRequest
             'email.unique' => __('lang.email.unique'),
             'email.email' => __('lang.email.email'),
             'email.max' => __('lang.email.max'),
-            'status.required' => __('lang.status.required')
+            'status.required' => __('lang.status.required'),
+            'role_permission_id.required' => '請選擇角色權限',
         ];
     }
 }

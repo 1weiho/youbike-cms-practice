@@ -7,11 +7,13 @@ return [
     'menu' => 'Menu',
     'news' => 'Latest News',
     'adminSetting' => 'Admin Setting',
+    'rolePermission' => 'Role Permission',
     'version' => 'Version',
     'logout' => 'Logout',
 
     // general
     'add' => 'Add',
+    'browse' => 'Browse',
     'operation' => 'Operation',
     'delete' => 'Delete',
     'modify' => 'Modify',
@@ -34,6 +36,7 @@ return [
     'confirmDeleteData' => 'Are you sure you want to delete this data?',
     'enable' => 'Enable',
     'disable' => 'Disable',
+    'selectAll' => 'Select All',
 
     // data table
     'lengthMenu' => 'Display _MENU_ entries per page',
@@ -76,6 +79,14 @@ return [
     'status' => 'Status',
     'modifyPassword' => 'Modify Password',
 
+    // role permission
+    'roleName' => 'Role Name',
+    'areaPermission' => 'Area Permission',
+    'rolePermission' => 'Role Permission',
+    'useAccount' => 'Use Account',
+    'permission' => 'Permission',
+    'deleteFailByAdmin' => 'Delete fail, this role permission is used by admin',
+
     // login
     'login' => 'Login',
     'pleaseEnterUsernameAndPasswordToLogin' => 'Please enter username and password to login',
@@ -116,4 +127,11 @@ return [
     'cover.image' => 'The cover must be an image',
     'cover.mimes' => 'The cover must be in PNG, JPEG, or JPG format',
     'cover.max' => 'The cover size cannot exceed 2MB',
+    // [role permission]
+    'role_name.required' => 'Please enter the role name.',
+    'role_name.unique' => 'The role name already exists.',
+    'role_name.min' => 'The role name must be at least 3 characters long.',
+    'role_name.max' => 'The role name must not exceed 15 characters.',
+    'area_permission_id.required' => 'Please select the area permission.',
+    'access_permission.required' => 'Please select the role permission.'
 ];

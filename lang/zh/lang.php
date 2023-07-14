@@ -7,11 +7,13 @@ return [
     'menu' => '選單',
     'news' => '最新消息',
     'adminSetting' => '管理者設定',
+    'rolePermission' => '角色權限',
     'version' => '版本',
     'logout' => '登出',
 
     // general
     'add' => '新增',
+    'browse' => '瀏覽',
     'operation' => '操作',
     'delete' => '刪除',
     'modify' => '修改',
@@ -34,6 +36,7 @@ return [
     'confirmDeleteData' => '確定要刪除嗎？',
     'enable' => '啟用',
     'disable' => '禁用',
+    'selectAll' => '全選',
 
     // data table
     'lengthMenu' => '每頁 _MENU_ 筆資料',
@@ -76,6 +79,14 @@ return [
     'status' => '狀態',
     'modifyPassword' => '修改密碼',
 
+    // role permission
+    'roleName' => '角色名稱',
+    'areaPermission' => '區域權限',
+    'rolePermission' => '角色權限',
+    'useAccount' => '使用帳號',
+    'permission' => '權限',
+    'deleteFailByAdmin' => '刪除失敗，此角色權限已被使用',
+
     // login
     'login' => '登入',
     'pleaseEnterUsernameAndPasswordToLogin' => '請輸入帳號密碼登入系統',
@@ -116,4 +127,11 @@ return [
     'cover.image' => '封面必須是一個圖片',
     'cover.mimes' => '封面必須是 png, jpeg, jpg 格式',
     'cover.max' => '封面大小不能超過 2MB',
+    // [role permission]
+    'role_name.required' => '請輸入角色名稱',
+    'role_name.unique' => '角色名稱已存在',
+    'role_name.min' => '角色名稱最少3個字',
+    'role_name.max' => '角色名稱最多15個字',
+    'area_permission_id.required' => '請選擇區域權限',
+    'access_permission.required' => '請選擇角色權限',
 ];
