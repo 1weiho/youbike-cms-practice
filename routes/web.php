@@ -72,6 +72,18 @@ Route::middleware(['auth'])->group(function () {
             return view('admin-reset-password')->with('lang', json_encode(__('lang')));;
         });
     });
+
+    Route::group(['prefix' => 'role-permission'], function () {
+        Route::get('/', function () {
+            return view('role-permission-list')->with('lang', json_encode(__('lang')));
+        });
+        Route::get('/add', function () {
+            return view('role-permission-add')->with('lang', json_encode(__('lang')));;
+        });
+        Route::get('/edit/{id}', function () {
+            return view('role-permission-edit')->with('lang', json_encode(__('lang')));;
+        });
+    });
 });
 
 
@@ -88,7 +100,7 @@ Route::get('lang/{locale}', function ($locale) {
 
     return redirect()->back();
 });
-Route::get('/lang', function() {
+Route::get('/lang', function () {
     $lang = session()->get('locale');
     return $lang;
 });

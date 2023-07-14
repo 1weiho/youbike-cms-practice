@@ -11,29 +11,27 @@
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.css" />
   <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
-  <script src="/js/admin.js"></script>
+  <script src="/js/rolePermission.js"></script>
 </head>
-<title>{{ __('lang.adminSetting') }}</title>
+<title>{{ __('lang.rolePermission') }}</title>
 </head>
 
 <x-layout>
   <div class="py-4 px-5">
-    <h2>{{ __('lang.adminSetting') }}</h2>
+    <h2>{{ __('lang.rolePermission') }}</h2>
     <div class="d-flex h-full justify-content-end rounded bg-white p-3 mt-3 d-flex flex-column">
       <div class="d-flex justify-content-end mb-3">
-        <a class="btn btn-primary" href="/admin/add">{{ __('lang.add') }}</a>
+        <a class="btn btn-primary" href="/role-permission/add">{{ __('lang.add') }}</a>
       </div>
       <div>
-        <table id="adminList" class="display">
+        <table id="rolePermissionList" class="display">
           <thead>
             <tr>
-              <th>{{ __('lang.username') }}</th>
-              <th>{{ __('lang.name') }}</th>
-              <th>角色權限</th>
-              <th>{{ __('lang.createAt') }}</th>
-              <th>{{ __('lang.updateAt') }}</th>
-              <th>{{ __('lang.status') }}</th>
-              <th>{{ __('lang.operation') }}</th>
+              <th>角色名稱</th>
+              <th>使用帳號</th>
+              <th>建立時間</th>
+              <th>修改時間</th>
+              <th>操作</th>
             </tr>
           </thead>
           <tbody>
@@ -50,7 +48,7 @@
   const __ = {!! $lang !!};
   $(document).ready(async function () {
     initDataTable();
-    const adminList = await fetchAdminList();
-    setAdminList(adminList);
+    const rolePermissionList = await fetchRolePermissionList();
+    setRolePermissionList(rolePermissionList);
   });
 </script>

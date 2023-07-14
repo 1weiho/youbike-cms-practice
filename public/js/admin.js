@@ -52,12 +52,13 @@ const setAdminList = (adminList) => {
     const table = $('#adminList').DataTable();
     table.clear().draw();
     adminList.forEach((admin, index) => {
-        const { _id, username, name, status, updated_at, created_at } = admin;
+        const { _id, username, name, role_permission, status, updated_at, created_at } = admin;
         table.row.add([
             username,
             name,
-            formatDateTime(updated_at),
+            role_permission.role_name,
             formatDateTime(created_at),
+            formatDateTime(updated_at),
             status === '1' ? `<span class="badge bg-success">${__['enable']}</span>` : `<span class="badge bg-danger">${__['disable']}</span>`,
             `<button type="button" class="btn btn-warning" onclick="editAdmin('${_id}')">${__['modify']}</button>
             <button type="button" class="btn btn-danger" onclick="deleteAdmin('${_id}')">${__['delete']}</button>`
@@ -105,11 +106,13 @@ const initEditForm = async () => {
     const id = window.location.pathname.split('/').pop();
     const res = await axios.get('/api/admin/' + id);
     const admin = res.data;
-    const { username, name, email, status } = admin;
+    console.log(admin);
+    const { username, name, email, status, role_permission } = admin;
     $('#username').val(username);
     $('#name').val(name);
     $('#email').val(email);
     $(' input[name="status"][value="' + status + '"]').prop('checked', true);
+    $('#rolePermission').val(role_permission._id);
     $('#resetPasswordLink').attr('href', '/admin/reset-password/' + id);
 }
 
@@ -129,4 +132,17 @@ const submitResetPasswordForm = async (e) => {
         const message = err.response.data.message;
         alert(message);
     }
+}
+
+const fetchRolePermissionList = async () => {
+    const res = await axios.get('/api/role-permission');
+    return res.data;
+}
+
+const setRolePermissionOption = (rolePermissionList) => {
+    const select = $('#rolePermission');
+    rolePermissionList.forEach((rolePermission, index) => {
+        const { _id, role_name } = rolePermission;
+        select.append(`<option value="${_id}">${role_name}</option>`);
+    });
 }

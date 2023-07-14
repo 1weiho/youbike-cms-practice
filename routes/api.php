@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AreaController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\RolePermissionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -29,3 +30,5 @@ Route::get('area', [AreaController::class, 'index']);
 
 Route::apiResource('admin', AdminController::class);
 Route::post('admin/reset-password/{id}', [AdminController::class, 'resetPassword']);
+
+Route::apiResource('role-permission', RolePermissionController::class);

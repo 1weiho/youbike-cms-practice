@@ -19,6 +19,15 @@ class AdminController extends Controller
     public function index()
     {
         $collection = Admin::all();
+
+        foreach ($collection as $key => $value) {
+            $collection[$key]['role_permission'] = $value->role_permission();
+        }
+
+        foreach ($collection as $key => $value) {
+            unset($collection[$key]['role_permission_id']);
+        }
+
         return response()->json($collection);
     }
 
@@ -53,6 +62,8 @@ class AdminController extends Controller
     public function show($id)
     {
         $collection = Admin::find($id);
+        $collection['role_permission'] = $collection->role_permission();
+        unset($collection['role_permission_id']);
         return response()->json($collection);
     }
 

@@ -7,6 +7,7 @@ return [
     'menu' => '選單',
     'news' => '最新消息',
     'adminSetting' => '管理者設定',
+    'rolePermission' => '角色權限',
     'version' => '版本',
     'logout' => '登出',
 
@@ -34,6 +35,7 @@ return [
     'confirmDeleteData' => '確定要刪除嗎？',
     'enable' => '啟用',
     'disable' => '禁用',
+    'selectAll' => '全選',
 
     // data table
     'lengthMenu' => '每頁 _MENU_ 筆資料',
@@ -75,6 +77,11 @@ return [
     'confirmPassword' => '確認密碼',
     'status' => '狀態',
     'modifyPassword' => '修改密碼',
+
+    // role permission
+    'roleName' => '角色名稱',
+    'areaPermission' => '區域權限',
+    'rolePermission' => '角色權限',
 
     // login
     'login' => '登入',

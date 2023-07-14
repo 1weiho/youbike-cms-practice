@@ -7,6 +7,7 @@ return [
     'menu' => 'Menu',
     'news' => 'Latest News',
     'adminSetting' => 'Admin Setting',
+    'rolePermission' => 'Role Permission',
     'version' => 'Version',
     'logout' => 'Logout',
 
@@ -34,6 +35,7 @@ return [
     'confirmDeleteData' => 'Are you sure you want to delete this data?',
     'enable' => 'Enable',
     'disable' => 'Disable',
+    'selectAll' => 'Select All',
 
     // data table
     'lengthMenu' => 'Display _MENU_ entries per page',
@@ -75,6 +77,11 @@ return [
     'confirmPassword' => 'Confirm Password',
     'status' => 'Status',
     'modifyPassword' => 'Modify Password',
+
+    // role permission
+    'roleName' => 'Role Name',
+    'areaPermission' => 'Area Permission',
+    'rolePermission' => 'Role Permission',
 
     // login
     'login' => 'Login',
