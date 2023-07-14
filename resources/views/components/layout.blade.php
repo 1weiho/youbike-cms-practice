@@ -9,31 +9,41 @@
             </a>
             <hr>
             <ul class="nav nav-pills flex-column mb-auto">
+                @can('viewAny', App\Models\Area::class)
                 <li class="mb-3">
                     <a href="/area" class="nav-link{{ Request::is('area', '/') ? ' active' : '' }} text-white">
                         {{ __('lang.area') }}
                     </a>
                 </li>
+                @endcan
+                @can('viewAny', App\Models\Menu::class)
                 <li class="mb-3">
                     <a href="/menu" class="nav-link{{ Request::is('menu') ? ' active' : '' }} text-white">
                         {{ __('lang.menu') }}
                     </a>
                 </li>
+                @endcan
+                @can('viewAny', App\Models\News::class)
                 <li class="mb-3">
                     <a href="/news" class="nav-link{{ Request::is('news') ? ' active' : '' }} text-white">
                         {{ __('lang.news') }}
                     </a>
                 </li>
+                @endcan
+                @can('viewAny', App\Models\Admin::class)
                 <li class="mb-3">
                     <a href="/admin" class="nav-link{{ Request::is('admin') ? ' active' : '' }} text-white">
                         {{ __('lang.adminSetting') }}
                     </a>
                 </li>
+                @endcan
+                @can('viewAny', App\Models\RolePermission::class)
                 <li class="mb-3">
                     <a href="/role-permission" class="nav-link{{ Request::is('role-permission') ? ' active' : '' }} text-white">
                         {{ __('lang.rolePermission') }}
                     </a>
                 </li>
+                @endcan
             </ul>
             <span class="d-flex align-items-center">
                 <span class="me-2">{{ app()->getLocale() === 'zh' ? '語言：' : 'Language:' }}</span>
