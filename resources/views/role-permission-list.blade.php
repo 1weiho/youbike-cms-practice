@@ -27,11 +27,11 @@
         <table id="rolePermissionList" class="display">
           <thead>
             <tr>
-              <th>角色名稱</th>
-              <th>使用帳號</th>
-              <th>建立時間</th>
-              <th>修改時間</th>
-              <th>操作</th>
+              <th>{{ __('lang.roleName') }}</th>
+              <th>{{ __('lang.useAccount') }}</th>
+              <th>{{ __('lang.createAt') }}</th>
+              <th>{{ __('lang.updateAt') }}</th>
+              <th>{{ __('lang.operation') }}</th>
             </tr>
           </thead>
           <tbody>

@@ -13,6 +13,7 @@ return [
 
     // general
     'add' => '新增',
+    'browse' => '瀏覽',
     'operation' => '操作',
     'delete' => '刪除',
     'modify' => '修改',
@@ -82,6 +83,8 @@ return [
     'roleName' => '角色名稱',
     'areaPermission' => '區域權限',
     'rolePermission' => '角色權限',
+    'useAccount' => '使用帳號',
+    'permission' => '權限',
 
     // login
     'login' => '登入',
@@ -123,4 +126,11 @@ return [
     'cover.image' => '封面必須是一個圖片',
     'cover.mimes' => '封面必須是 png, jpeg, jpg 格式',
     'cover.max' => '封面大小不能超過 2MB',
+    // [role permission]
+    'role_name.required' => '請輸入角色名稱',
+    'role_name.unique' => '角色名稱已存在',
+    'role_name.min' => '角色名稱最少3個字',
+    'role_name.max' => '角色名稱最多15個字',
+    'area_permission_id.required' => '請選擇區域權限',
+    'access_permission.required' => '請選擇角色權限',
 ];

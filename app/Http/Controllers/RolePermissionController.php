@@ -40,12 +40,16 @@ class RolePermissionController extends Controller
     {
 
         $request->validate([
-            'role_name' => 'unique:role_permission|min:3|max:15',
+            'role_name' => 'min:3|max:15',
         ], [
-            'role_name.unique' => '角色名稱已存在',
-            'role_name.min' => '角色名稱最少3個字',
-            'role_name.max' => '角色名稱最多15個字',
+            'role_name.min' => __('lang.role_name.min'),
+            'role_name.max' => __('lang.role_name.max'),
         ]);
+
+        $role_name = RolePermission::where('role_name', $request->role_name)->where('_id', '!=', $id)->first();
+        if ($role_name) {
+            return response()->json(['message' => 'Role name already exist', 'status' => 400]);
+        }
 
         $collection = RolePermission::find($id);
         $collection->update($request->all());

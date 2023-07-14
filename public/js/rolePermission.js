@@ -74,11 +74,9 @@ const submitForm = async (e) => {
     try {
         const res = await axios.post('/api/role-permission', data);
         if (res.data.status == 200) {
-            console.log(res);
             alert(__['addSuccess']);
             window.location.href = '/role-permission';
         } else {
-            console.log(res);
             alert(__['addFail']);
         }
     } catch (err) {
@@ -98,11 +96,9 @@ const submitEditForm = async (e) => {
     try {
         const res = await axios.put('/api/role-permission/' + id, data);
         if (res.data.status == 200) {
-            console.log(res);
             alert(__['modifySuccess']);
             window.location.href = '/role-permission';
         } else {
-            console.log(res);
             alert(__['modifyFail']);
         }
     } catch (err) {
@@ -115,7 +111,6 @@ const initEditForm = async () => {
     const id = window.location.pathname.split('/').pop();
     const res = await axios.get('/api/role-permission/' + id);
     const rolePermissionData = res.data;
-    console.log(rolePermissionData);
     const { role_name, area_permission_id, access_permission } = rolePermissionData;
     $('#roleName').val(role_name);
     $('#areaPermission').val(area_permission_id);
@@ -161,18 +156,18 @@ const initCheckboxTable = () => {
 
 const setCheckboxTable = (data) => {
     let permissionTexts = {
-        create: '新增',
-        read: '瀏覽',
-        update: '修改',
-        delete: '刪除'
+        create: __['add'],
+        read: __['browse'],
+        update: __['modify'],
+        delete: __['delete']
     };
 
     let permissionCategoryTexts = {
-        area: '區域',
-        menu: '選單',
-        news: '最新消息',
-        admin_setting: '管理者設定',
-        role_permission: '角色權限'
+        area: __['area'],
+        menu: __['menu'],
+        news: __['news'],
+        admin_setting: __['adminSetting'],
+        role_permission: __['rolePermission']
     };
 
     // 迭代每個欄位的全選按鈕
@@ -181,7 +176,6 @@ const setCheckboxTable = (data) => {
 
         // 使用對應表進行文字轉換
         category = Object.keys(permissionCategoryTexts).find(key => permissionCategoryTexts[key] === category);
-        console.log(category, data.hasOwnProperty(category));
 
         // 檢查 responseData 是否有該欄位的勾選資料
         if (data.hasOwnProperty(category)) {
@@ -236,18 +230,18 @@ const getSelectTableData = () => {
 
     // 權限對應的文字對照表
     let permissionTexts = {
-        create: '新增',
-        read: '瀏覽',
-        update: '修改',
-        delete: '刪除'
+        create: __['add'],
+        read: __['browse'],
+        update: __['modify'],
+        delete: __['delete']
     };
 
     let permissionCategoryTexts = {
-        area: '區域',
-        menu: '選單',
-        news: '最新消息',
-        admin_setting: '管理者設定',
-        role_permission: '角色權限',
+        area: __['area'],
+        menu: __['menu'],
+        news: __['news'],
+        admin_setting: __['adminSetting'],
+        role_permission: __['rolePermission'],
     }
 
     // 迭代每個欄位的全選按鈕

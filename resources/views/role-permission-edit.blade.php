@@ -54,133 +54,133 @@
             <table class="table table-striped" id="checkboxTable">
               <thead>
                 <tr>
-                  <th>選單</th>
-                  <th>權限</th>
+                  <th>{{ __('lang.menu') }}</th>
+                  <th>{{ __('lang.permission') }}</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>區域</td>
+                  <td>{{ __('lang.area') }}</td>
                   <td class="d-flex">
                     <div class="me-3">
                       <input type="checkbox" class="selectAll">
-                      <label>全選</label>
+                      <label>{{ __('lang.selectAll') }}</label>
                     </div>
                     <div class="me-3">
                       <input type="checkbox" class="checkbox">
-                      <label>瀏覽</label>
+                      <label>{{ __('lang.browse') }}</label>
                     </div>
                     <div class="me-3">
                       <input type="checkbox" class="checkbox">
-                      <label>新增</label>
+                      <label>{{ __('lang.add') }}</label>
                     </div>
                     <div class="me-3">
                       <input type="checkbox" class="checkbox">
-                      <label>修改</label>
+                      <label>{{ __('lang.modify') }}</label>
                     </div>
                     <div class="me-3">
                       <input type="checkbox" class="checkbox">
-                      <label>刪除</label>
+                      <label>{{ __('lang.delete') }}</label>
                     </div>
                   </td>
                 </tr>
                 <tr>
-                  <td>選單</td>
+                  <td>{{ __('lang.menu') }}</td>
                   <td class="d-flex">
                     <div class="me-3">
                       <input type="checkbox" class="selectAll">
-                      <label>全選</label>
+                      <label>{{ __('lang.selectAll') }}</label>
                     </div>
                     <div class="me-3">
                       <input type="checkbox" class="checkbox">
-                      <label>瀏覽</label>
+                      <label>{{ __('lang.browse') }}</label>
                     </div>
                     <div class="me-3">
                       <input type="checkbox" class="checkbox">
-                      <label>新增</label>
+                      <label>{{ __('lang.add') }}</label>
                     </div>
                     <div class="me-3">
                       <input type="checkbox" class="checkbox">
-                      <label>修改</label>
+                      <label>{{ __('lang.modify') }}</label>
                     </div>
                     <div class="me-3">
                       <input type="checkbox" class="checkbox">
-                      <label>刪除</label>
+                      <label>{{ __('lang.delete') }}</label>
                     </div>
                   </td>
                 </tr>
                 <tr>
-                  <td>最新消息</td>
+                  <td>{{ __('lang.news') }}</td>
                   <td class="d-flex">
                     <div class="me-3">
                       <input type="checkbox" class="selectAll">
-                      <label>全選</label>
+                      <label>{{ __('lang.selectAll') }}</label>
                     </div>
                     <div class="me-3">
                       <input type="checkbox" class="checkbox">
-                      <label>瀏覽</label>
+                      <label>{{ __('lang.browse') }}</label>
                     </div>
                     <div class="me-3">
                       <input type="checkbox" class="checkbox">
-                      <label>新增</label>
+                      <label>{{ __('lang.add') }}</label>
                     </div>
                     <div class="me-3">
                       <input type="checkbox" class="checkbox">
-                      <label>修改</label>
+                      <label>{{ __('lang.modify') }}</label>
                     </div>
                     <div class="me-3">
                       <input type="checkbox" class="checkbox">
-                      <label>刪除</label>
+                      <label>{{ __('lang.delete') }}</label>
                     </div>
                   </td>
                 </tr>
                 <tr>
-                  <td>管理者設定</td>
+                  <td>{{ __('lang.adminSetting') }}</td>
                   <td class="d-flex">
                     <div class="me-3">
                       <input type="checkbox" class="selectAll">
-                      <label>全選</label>
+                      <label>{{ __('lang.selectAll') }}</label>
                     </div>
                     <div class="me-3">
                       <input type="checkbox" class="checkbox">
-                      <label>瀏覽</label>
+                      <label>{{ __('lang.browse') }}</label>
                     </div>
                     <div class="me-3">
                       <input type="checkbox" class="checkbox">
-                      <label>新增</label>
+                      <label>{{ __('lang.add') }}</label>
                     </div>
                     <div class="me-3">
                       <input type="checkbox" class="checkbox">
-                      <label>修改</label>
+                      <label>{{ __('lang.modify') }}</label>
                     </div>
                     <div class="me-3">
                       <input type="checkbox" class="checkbox">
-                      <label>刪除</label>
+                      <label>{{ __('lang.delete') }}</label>
                     </div>
                   </td>
                 </tr>
                 <tr>
-                  <td>角色權限</td>
+                  <td>{{ __('lang.rolePermission') }}</td>
                   <td class="d-flex">
                     <div class="me-3">
                       <input type="checkbox" class="selectAll">
-                      <label>全選</label>
+                      <label>{{ __('lang.selectAll') }}</label>
                     </div>
                     <div class="me-3">
                       <input type="checkbox" class="checkbox">
-                      <label>瀏覽</label>
+                      <label>{{ __('lang.browse') }}</label>
                     </div>
                     <div class="me-3">
                       <input type="checkbox" class="checkbox">
-                      <label>新增</label>
+                      <label>{{ __('lang.add') }}</label>
                     </div>
                     <div class="me-3">
                       <input type="checkbox" class="checkbox">
-                      <label>修改</label>
+                      <label>{{ __('lang.modify') }}</label>
                     </div>
                     <div class="me-3">
                       <input type="checkbox" class="checkbox">
-                      <label>刪除</label>
+                      <label>{{ __('lang.delete') }}</label>
                     </div>
                   </td>
                 </tr>

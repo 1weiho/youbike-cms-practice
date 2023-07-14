@@ -13,6 +13,7 @@ return [
 
     // general
     'add' => 'Add',
+    'browse' => 'Browse',
     'operation' => 'Operation',
     'delete' => 'Delete',
     'modify' => 'Modify',
@@ -82,6 +83,8 @@ return [
     'roleName' => 'Role Name',
     'areaPermission' => 'Area Permission',
     'rolePermission' => 'Role Permission',
+    'useAccount' => 'Use Account',
+    'permission' => 'Permission',
 
     // login
     'login' => 'Login',
@@ -123,4 +126,11 @@ return [
     'cover.image' => 'The cover must be an image',
     'cover.mimes' => 'The cover must be in PNG, JPEG, or JPG format',
     'cover.max' => 'The cover size cannot exceed 2MB',
+    // [role permission]
+    'role_name.required' => 'Please enter the role name.',
+    'role_name.unique' => 'The role name already exists.',
+    'role_name.min' => 'The role name must be at least 3 characters long.',
+    'role_name.max' => 'The role name must not exceed 15 characters.',
+    'area_permission_id.required' => 'Please select the area permission.',
+    'access_permission.required' => 'Please select the role permission.'
 ];

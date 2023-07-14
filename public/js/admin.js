@@ -89,7 +89,6 @@ const submitEditForm = async (e) => {
     const formData = $(e.target).serialize();
     try {
         const res = await axios.put('/api/admin/' + id, formData);
-        console.log(res);
         if (res.data.status == 200) {
             alert(__['modifySuccess']);
             window.location.href = '/admin';
@@ -106,7 +105,6 @@ const initEditForm = async () => {
     const id = window.location.pathname.split('/').pop();
     const res = await axios.get('/api/admin/' + id);
     const admin = res.data;
-    console.log(admin);
     const { username, name, email, status, role_permission } = admin;
     $('#username').val(username);
     $('#name').val(name);
