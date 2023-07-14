@@ -18,9 +18,11 @@
   <div class="py-4 px-5">
     <h2>{{ __('lang.area') }}</h2>
     <div class="d-flex h-full justify-content-end rounded bg-white p-3 mt-3 d-flex flex-column">
+      @can('create', App\Models\Area::class)
       <div class="d-flex justify-content-end mb-3">
         <a class="btn btn-primary" href="/area/add">{{ __('lang.add') }}</a>
       </div>
+      @endcan
       <div>
         <table id="myTable" class="display">
           <thead>
@@ -35,13 +37,17 @@
             <tr>
               <td>{{ $item->name }}</td>
               <td class="d-flex">
+                @can('update', App\Models\Area::class)
                 <a class="btn btn-warning me-3" href={{ "/area/edit/" . $item->_id }}>{{ __('lang.modify') }}</a>
+                @endcan
+                @can('delete', App\Models\Area::class)
                 <form id="delete-form-{{ $item->_id }}" action="{{ route('area.delete', ['id' => $item->_id]) }}"
                   method="POST">
                   @csrf
                   @method('DELETE')
                   <button type="submit" class="btn btn-danger" onclick="return confirm('{{ __('lang.confirmDeleteArea') }}')">{{ __('lang.delete') }}</button>
                 </form>
+                @endcan
               </td>
             </tr>
             @endforeach
