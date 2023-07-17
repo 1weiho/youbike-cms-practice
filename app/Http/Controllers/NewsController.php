@@ -3,14 +3,88 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\NewsRequest;
+use App\Models\Admin;
 use App\Models\News;
+use App\Models\RolePermission;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
 class NewsController extends Controller
 {
-    // list all news
+    // show news list page
+    public function listPage()
+    {
+        try {
+            $this->authorize('viewAny', News::class);
+        } catch (\Throwable $th) {
+            return redirect()->route('admin.login');
+        }
+        return view('news-list')->with('lang', json_encode(__('lang')));
+    }
+
+    // show news add page
+    public function addPage()
+    {
+        try {
+            $this->authorize('create', News::class);
+        } catch (\Throwable $th) {
+            return redirect()->route('admin.login');
+        }
+        return view('news-add')->with('lang', json_encode(__('lang')));
+    }
+
+    // show news edit page
+    public function editPage()
+    {
+        try {
+            $this->authorize('update', News::class);
+        } catch (\Throwable $th) {
+            return redirect()->route('admin.login');
+        }
+        return view('news-edit')->with('lang', json_encode(__('lang')));
+    }
+
     public function index(Request $request)
+    {
+        try {
+            $this->authorize('viewAny', News::class);
+
+            $canUpdate = $this->checkUpdatePermission();
+            $canDelete = $this->checkDeletePermission();
+
+            $collection = $this->getNewsData($request);
+
+            return response()->json([
+                'data' => $collection,
+                'canUpdate' => $canUpdate,
+                'canDelete' => $canDelete,
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json(['status' => 'error', 'message' => '權限拒絕'], 403);
+        }
+    }
+
+    private function checkUpdatePermission()
+    {
+        try {
+            $this->authorize('update', News::class);
+            return true;
+        } catch (\Throwable $th) {
+            return false;
+        }
+    }
+
+    private function checkDeletePermission()
+    {
+        try {
+            $this->authorize('delete', News::class);
+            return true;
+        } catch (\Throwable $th) {
+            return false;
+        }
+    }
+
+    private function getNewsData(Request $request)
     {
         $query = News::query();
         $perPage = 10;
@@ -39,6 +113,12 @@ class NewsController extends Controller
             $perPage = $request->input('perPage');
         }
 
+        // 過濾使用者可以看到的區域
+        $userId = auth()->user()->_id;
+        $role_permission_id = Admin::where('_id', $userId)->first()->role_permission_id;
+        $area_permission_id = RolePermission::where('_id', $role_permission_id)->first()->area_permission_id;
+        $query->whereIn('area_id', $area_permission_id);
+
         $collection = $query->paginate($perPage);
 
         // add $collection[]->area and $collection[]->menu to $collection
@@ -47,12 +127,18 @@ class NewsController extends Controller
             $collection[$key]['menu'] = $value->menu();
         }
 
-        return response()->json($collection);
+        return $collection;
     }
 
     // add new news
     public function store(NewsRequest $request)
     {
+        // 檢查使用者是否有新增權限
+        try {
+            $this->authorize('create', News::class);
+        } catch (\Throwable $th) {
+            return response()->json(['status' => 'error', 'message' => '權限拒絕'], 403);
+        }
         $areaString = $request->input('area');
         if ($areaString == '') {
             $area = [];
@@ -94,6 +180,12 @@ class NewsController extends Controller
     // show a news by id
     public function show($id)
     {
+        // 檢查使用者是否有讀取權限
+        try {
+            $this->authorize('viewAny', News::class);
+        } catch (\Throwable $th) {
+            return response()->json(['status' => 'error', 'message' => '權限拒絕'], 403);
+        }
         $collection = News::find($id);
         $collection['area'] = $collection->area();
         $collection['menu'] = $collection->menu();
@@ -103,6 +195,13 @@ class NewsController extends Controller
     // edit a news by id
     public function modify(NewsRequest $request, $id)
     {
+        // 檢查使用者是否有更新權限
+        try {
+            $this->authorize('update', News::class);
+        } catch (\Throwable $th) {
+            return response()->json(['status' => 'error', 'message' => '權限拒絕'], 403);
+        }
+
         $areaString = $request->input('area');
         if ($areaString == '') {
             $area = [];
@@ -144,6 +243,13 @@ class NewsController extends Controller
     // delete a news by id
     public function destroy($id)
     {
+        // 檢查使用者是否有刪除權限
+        try {
+            $this->authorize('delete', News::class);
+        } catch (\Throwable $th) {
+            return response()->json(['status' => 'error', 'message' => '權限拒絕'], 403);
+        }
+
         News::destroy($id);
         return response()->json(['status' => 'success', 'message' => 'News deleted successfully!']);
     }

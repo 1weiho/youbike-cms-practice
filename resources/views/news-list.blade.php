@@ -19,9 +19,11 @@
   <div class="py-4 px-5">
     <h2>{{ __('lang.news') }}</h2>
     <div class="d-flex h-full justify-content-end rounded bg-white p-3 mt-3 d-flex flex-column">
+      @can('create', App\Models\News::class)
       <div class="d-flex justify-content-end mb-3">
         <a class="btn btn-primary" href="/news/add">{{ __('lang.add') }}</a>
       </div>
+      @endcan
       <div class="d-flex mb-3">
         <div class="d-flex align-items-center me-4">
           <label class="me-2">{{ __('lang.menu') }}</label>
@@ -45,7 +47,8 @@
         </div>
         <div class="d-flex align-items-center me-4">
           <label class="me-2">{{ __('lang.title') }}</label>
-          <input type="text" class="form-control form-control-lg" placeholder="{{ __('lang.pleaseEnterTitle') }}" name="title" id="title" />
+          <input type="text" class="form-control form-control-lg" placeholder="{{ __('lang.pleaseEnterTitle') }}"
+            name="title" id="title" />
         </div>
         <div class="d-flex align-items-center me-4">
           <label class="me-2">{{ __('lang.eachPageCount') }}</label>
@@ -95,7 +98,7 @@
     setMenuOption(menu);
     const area = await getArea();
     setAreaOption(area);
-    setPagination(data);
+    setPagination(data.data);
     setQueryForm(urlQuery);
   });
 </script>

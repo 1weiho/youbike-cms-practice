@@ -47,15 +47,9 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::group(['prefix' => 'news'], function () {
-        Route::get('/', function () {
-            return view('news-list')->with('lang', json_encode(__('lang')));
-        });
-        Route::get('/add', function () {
-            return view('news-add')->with('lang', json_encode(__('lang')));;
-        });
-        Route::get('/edit/{id}', function () {
-            return view('news-edit')->with('lang', json_encode(__('lang')));;
-        });
+        Route::get('/', [NewsController::class, 'listPage'])->name('news.list');
+        Route::get('/add', [NewsController::class, 'addPage'])->name('news.add');
+        Route::get('/edit/{id}', [NewsController::class, 'editPage'])->name('news.edit');
     });
 
     Route::group(['prefix' => 'admin'], function () {

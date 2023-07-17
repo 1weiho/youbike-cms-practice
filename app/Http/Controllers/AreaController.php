@@ -29,7 +29,11 @@ class AreaController extends Controller
     // 列出所有 area 的 json
     public function index()
     {
-        $collection = Area::all();
+        // 過濾使用者可以看到的區域
+        $userId = auth()->user()->_id;
+        $role_permission_id = Admin::where('_id', $userId)->first()->role_permission_id;
+        $area_permission_id = RolePermission::where('_id', $role_permission_id)->first()->area_permission_id;
+        $collection = Area::whereIn('_id', $area_permission_id)->get();
         return response()->json($collection);
     }
 

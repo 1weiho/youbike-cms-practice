@@ -131,7 +131,6 @@ class AdminController extends Controller
         if (Admin::where('username', $credentials['username'])->value('status') == 0) {
             return redirect()->back()->withErrors(['username' => '帳號已被停用'])->withInput($request->except('password'));
         }
-
         if (Auth::attempt($credentials)) {
             return redirect()->intended('/');
         } else {

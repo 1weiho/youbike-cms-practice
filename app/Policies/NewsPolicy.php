@@ -42,7 +42,7 @@ class NewsPolicy
      */
     public function create(Admin $admin)
     {
-        //
+        return RolePermission::where('_id', $admin->role_permission_id)->first()->access_permission['news']['create'];
     }
 
     /**
@@ -52,9 +52,9 @@ class NewsPolicy
      * @param  \App\Models\News  $news
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(Admin $admin, News $news)
+    public function update(Admin $admin)
     {
-        //
+        return RolePermission::where('_id', $admin->role_permission_id)->first()->access_permission['news']['update'];
     }
 
     /**
@@ -64,9 +64,9 @@ class NewsPolicy
      * @param  \App\Models\News  $news
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(Admin $admin, News $news)
+    public function delete(Admin $admin)
     {
-        //
+        return RolePermission::where('_id', $admin->role_permission_id)->first()->access_permission['news']['delete'];
     }
 
     /**
