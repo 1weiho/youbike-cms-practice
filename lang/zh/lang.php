@@ -37,6 +37,7 @@ return [
     'enable' => '啟用',
     'disable' => '禁用',
     'selectAll' => '全選',
+    'permissionDenied' => '權限不足',
 
     // data table
     'lengthMenu' => '每頁 _MENU_ 筆資料',

@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AreaController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\RolePermissionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
@@ -47,42 +48,22 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::group(['prefix' => 'news'], function () {
-        Route::get('/', function () {
-            return view('news-list')->with('lang', json_encode(__('lang')));
-        });
-        Route::get('/add', function () {
-            return view('news-add')->with('lang', json_encode(__('lang')));;
-        });
-        Route::get('/edit/{id}', function () {
-            return view('news-edit')->with('lang', json_encode(__('lang')));;
-        });
+        Route::get('/', [NewsController::class, 'listPage'])->name('news.list');
+        Route::get('/add', [NewsController::class, 'addPage'])->name('news.add');
+        Route::get('/edit/{id}', [NewsController::class, 'editPage'])->name('news.edit');
     });
 
     Route::group(['prefix' => 'admin'], function () {
-        Route::get('/', function () {
-            return view('admin-list')->with('lang', json_encode(__('lang')));
-        });
-        Route::get('/add', function () {
-            return view('admin-add')->with('lang', json_encode(__('lang')));;
-        });
-        Route::get('/edit/{id}', function () {
-            return view('admin-edit')->with('lang', json_encode(__('lang')));;
-        });
-        Route::get('/reset-password/{id}', function () {
-            return view('admin-reset-password')->with('lang', json_encode(__('lang')));;
-        });
+        Route::get('/', [AdminController::class, 'listPage'])->name('admin.list');
+        Route::get('/add', [AdminController::class, 'addPage'])->name('admin.add');
+        Route::get('/edit/{id}', [AdminController::class, 'editPage'])->name('admin.edit');
+        Route::get('/reset-password/{id}', [AdminController::class, 'resetPasswordPage'])->name('admin.reset-password');
     });
 
     Route::group(['prefix' => 'role-permission'], function () {
-        Route::get('/', function () {
-            return view('role-permission-list')->with('lang', json_encode(__('lang')));
-        });
-        Route::get('/add', function () {
-            return view('role-permission-add')->with('lang', json_encode(__('lang')));;
-        });
-        Route::get('/edit/{id}', function () {
-            return view('role-permission-edit')->with('lang', json_encode(__('lang')));;
-        });
+        Route::get('/', [RolePermissionController::class, 'listPage'])->name('role-permission.list');
+        Route::get('/add', [RolePermissionController::class, 'addPage'])->name('role-permission.add');
+        Route::get('/edit/{id}', [RolePermissionController::class, 'editPage'])->name('role-permission.edit');
     });
 });
 

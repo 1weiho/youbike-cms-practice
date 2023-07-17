@@ -11,6 +11,49 @@ use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
+    // show admin list page
+    public function listPage()
+    {
+        try {
+            $this->authorize('viewAny', Admin::class);
+        } catch (\Throwable $th) {
+            return redirect()->route('admin.login');
+        }
+        return view('admin-list')->with('lang', json_encode(__('lang')));
+    }
+
+    // show admin add page
+    public function addPage()
+    {
+        try {
+            $this->authorize('create', Admin::class);
+        } catch (\Throwable $th) {
+            return redirect()->route('admin.login');
+        }
+        return view('admin-add')->with('lang', json_encode(__('lang')));
+    }
+
+    // show admin edit page
+    public function editPage()
+    {
+        try {
+            $this->authorize('update', Admin::class);
+        } catch (\Throwable $th) {
+            return redirect()->route('admin.login');
+        }
+        return view('admin-edit')->with('lang', json_encode(__('lang')));
+    }
+
+    public function resetPasswordPage()
+    {
+        try {
+            $this->authorize('update', Admin::class);
+        } catch (\Throwable $th) {
+            return redirect()->route('admin.login');
+        }
+        return view('admin-reset-password')->with('lang', json_encode(__('lang')));
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -18,6 +61,15 @@ class AdminController extends Controller
      */
     public function index()
     {
+        // 檢查使用者是否有權限查看
+        try {
+            $this->authorize('viewAny', Admin::class);
+        } catch (\Throwable $th) {
+            return response()->json(['status' => 'error', 'message' => __('lang.permissionDenied')], 403);
+        }
+
+        $canUpdate = $this->checkUpdatePermission();
+        $canDelete = $this->checkDeletePermission();
         $collection = Admin::all();
 
         foreach ($collection as $key => $value) {
@@ -28,7 +80,31 @@ class AdminController extends Controller
             unset($collection[$key]['role_permission_id']);
         }
 
-        return response()->json($collection);
+        return response()->json([
+            'data' => $collection,
+            'canUpdate' => $canUpdate,
+            'canDelete' => $canDelete,
+        ]);
+    }
+
+    private function checkUpdatePermission()
+    {
+        try {
+            $this->authorize('update', Admin::class);
+            return true;
+        } catch (\Throwable $th) {
+            return false;
+        }
+    }
+
+    private function checkDeletePermission()
+    {
+        try {
+            $this->authorize('delete', Admin::class);
+            return true;
+        } catch (\Throwable $th) {
+            return false;
+        }
     }
 
     /**
@@ -48,6 +124,13 @@ class AdminController extends Controller
      */
     public function store(CreateAdminRequest $request)
     {
+        // 檢查使用者是否有權限新增
+        try {
+            $this->authorize('create', Admin::class);
+        } catch (\Throwable $th) {
+            return response()->json(['status' => 'error', 'message' => __('lang.permissionDenied')], 403);
+        }
+
         $request->merge(['password' => bcrypt($request->password)]);
         Admin::create($request->all());
         return response()->json(['message' => 'Admin created successfully', 'status' => 200]);
@@ -61,6 +144,13 @@ class AdminController extends Controller
      */
     public function show($id)
     {
+        // 檢查使用者是否有權限查看
+        try {
+            $this->authorize('viewAny', Admin::class);
+        } catch (\Throwable $th) {
+            return response()->json(['status' => 'error', 'message' => __('lang.permissionDenied')], 403);
+        }
+
         $collection = Admin::find($id);
         $collection['role_permission'] = $collection->role_permission();
         unset($collection['role_permission_id']);
@@ -87,6 +177,13 @@ class AdminController extends Controller
      */
     public function update(UpdateAdminRequest $request, $id)
     {
+        // 檢查使用者是否有權限更新
+        try {
+            $this->authorize('update', Admin::class);
+        } catch (\Throwable $th) {
+            return response()->json(['status' => 'error', 'message' => __('lang.permissionDenied')], 403);
+        }
+
         // reject updating password, username, return error
         if ($request->has('password') || $request->has('username')) {
             return response()->json(['message' => '帳號及密碼無法修改'], 400);
@@ -113,6 +210,13 @@ class AdminController extends Controller
      */
     public function destroy($id)
     {
+        // 檢查使用者是否有權限刪除
+        try {
+            $this->authorize('delete', Admin::class);
+        } catch (\Throwable $th) {
+            return response()->json(['status' => 'error', 'message' => __('lang.permissionDenied')], 403);
+        }
+
         Admin::destroy($id);
         return response()->json(['message' => 'Admin deleted successfully', 'status' => 200]);
     }
@@ -131,7 +235,6 @@ class AdminController extends Controller
         if (Admin::where('username', $credentials['username'])->value('status') == 0) {
             return redirect()->back()->withErrors(['username' => '帳號已被停用'])->withInput($request->except('password'));
         }
-
         if (Auth::attempt($credentials)) {
             return redirect()->intended('/');
         } else {

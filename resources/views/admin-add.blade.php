@@ -104,6 +104,6 @@
   $(document).ready(async function () {
     $('.select2').select2();
     const rolePermission = await fetchRolePermissionList();
-    setRolePermissionOption(rolePermission);
+    setRolePermissionOption(rolePermission.data);
   });
 </script>

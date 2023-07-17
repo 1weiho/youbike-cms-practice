@@ -20,9 +20,11 @@
   <div class="py-4 px-5">
     <h2>{{ __('lang.adminSetting') }}</h2>
     <div class="d-flex h-full justify-content-end rounded bg-white p-3 mt-3 d-flex flex-column">
+      @can('create', App\Models\Admin::class)
       <div class="d-flex justify-content-end mb-3">
         <a class="btn btn-primary" href="/admin/add">{{ __('lang.add') }}</a>
       </div>
+      @endcan
       <div>
         <table id="adminList" class="display">
           <thead>
@@ -51,6 +53,7 @@
   $(document).ready(async function () {
     initDataTable();
     const adminList = await fetchAdminList();
+    console.log(adminList);
     setAdminList(adminList);
   });
 </script>

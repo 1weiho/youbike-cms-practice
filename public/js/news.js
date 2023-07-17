@@ -21,18 +21,23 @@ const initEditor = async (content) => {
 const handleDeleteNews = async (id) => {
     if (!confirm(`${__['confirmDeleteData']}`)) return;
 
-    const res = await axios.delete('/api/news/' + id);
-    if (res.data.status == "success") {
+    try {
+        const res = await axios.delete('/api/news/' + id);
         window.location.reload();
-    } else {
-        alert(`${__['deleteFail']}`);
+    } catch (err) {
+        const message = err.response.data.message;
+        alert(message);
     }
 }
 
 const setNewsList = (data) => {
     let html = '';
+    const newsListPagination = data.data;
+    const canUpdate = data.canUpdate;
+    const canDelete = data.canDelete;
+    console.log(data);
 
-    if (data.data.length == 0) {
+    if (newsListPagination.data.length == 0) {
         html = `
             <tr>
                 <td colspan="5" class="text-center">${__['noSearchResult']}</td>
@@ -42,30 +47,30 @@ const setNewsList = (data) => {
         return;
     }
 
-    data.data.forEach(item => {
+    newsListPagination.data.forEach(item => {
         let statusBadge;
         if (item.status == 0) {
             statusBadge = `<span class="badge bg-danger">${__['hide']}</span>`;
         } else if (item.status == 1) {
-            statusBadge =  `<span class="badge bg-success">${__['display']}</span>`;
+            statusBadge = `<span class="badge bg-success">${__['display']}</span>`;
         } else {
             statusBadge = `<span class="badge bg-warning">${__['unknown']}</span>`;
         }
 
         html += `
             <tr>
-              <td>
-                ${item.area.map(area => `<span class="badge bg-secondary me-2">${area.name}</span>`).join('')}
-              </td>
-              <td>${item.menu.name}</td>
-              <td>${item.title}</td>
-              <td>${statusBadge}</td>
-              <td class="d-flex justify-content-center">
-                <a class="btn btn-warning me-3" href=${"/news/edit/" + item._id}>${__['modify']}</a>
-                <button type="button" class="btn btn-danger delete-btn" id=${item._id}>${__['delete']}</button>
-              </td>
+                <td>
+                    ${item.area.map(area => `<span class="badge bg-secondary me-2">${area.name}</span>`).join('')}
+                </td>
+                <td>${item.menu.name}</td>
+                <td>${item.title}</td>
+                <td>${statusBadge}</td>
+                <td>
+                    ${canUpdate ? `<a class="btn btn-warning me-3" href="/news/edit/${item._id}">${__['modify']}</a>` : ''}
+                    ${canDelete ? `<button type="button" class="btn btn-danger delete-btn" id="${item._id}">${__['delete']}</button>` : ''}
+                </td>
             </tr>
-          `;
+        `;
     });
     $('tbody').html(html);
     $('.delete-btn').on('click', function () {

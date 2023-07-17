@@ -37,6 +37,7 @@ return [
     'enable' => 'Enable',
     'disable' => 'Disable',
     'selectAll' => 'Select All',
+    'permissionDenied' => 'Permission denied',
 
     // data table
     'lengthMenu' => 'Display _MENU_ entries per page',

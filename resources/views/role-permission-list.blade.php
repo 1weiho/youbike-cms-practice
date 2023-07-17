@@ -20,9 +20,11 @@
   <div class="py-4 px-5">
     <h2>{{ __('lang.rolePermission') }}</h2>
     <div class="d-flex h-full justify-content-end rounded bg-white p-3 mt-3 d-flex flex-column">
+      @can('create', App\Models\RolePermission::class)
       <div class="d-flex justify-content-end mb-3">
         <a class="btn btn-primary" href="/role-permission/add">{{ __('lang.add') }}</a>
       </div>
+      @endcan
       <div>
         <table id="rolePermissionList" class="display">
           <thead>
