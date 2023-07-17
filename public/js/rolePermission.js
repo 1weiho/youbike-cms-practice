@@ -55,16 +55,18 @@ const editRolePermission = async (id) => {
 
 const setRolePermissionList = (rolePermissionList) => {
     const table = $('#rolePermissionList').DataTable();
+    const canUpdate = rolePermissionList.canUpdate;
+    const canDelete = rolePermissionList.canDelete;
     table.clear().draw();
-    rolePermissionList.forEach((rolePermission, index) => {
+    rolePermissionList.data.forEach((rolePermission, index) => {
         const { _id, role_name, account, updated_at, created_at } = rolePermission;
         table.row.add([
             role_name,
             `${account.map(account => `<span class="badge bg-secondary me-2">${account.username}</span>`).join('')}`,
             formatDateTime(created_at),
             formatDateTime(updated_at),
-            `<button type="button" class="btn btn-warning" onclick="editRolePermission('${_id}')">${__['modify']}</button>
-            <button type="button" class="btn btn-danger" onclick="deleteRolePermission('${_id}')">${__['delete']}</button>`
+            (canUpdate ? `<button type="button" class="btn btn-warning" onclick="editRolePermission('${_id}')">${__['modify']}</button>` : '') +
+            (canDelete ? `<button type="button" class="btn btn-danger ms-2" onclick="deleteRolePermission('${_id}')">${__['delete']}</button>` : '')
         ]).draw(false);
     });
 }

@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AreaController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\RolePermissionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
@@ -60,15 +61,9 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::group(['prefix' => 'role-permission'], function () {
-        Route::get('/', function () {
-            return view('role-permission-list')->with('lang', json_encode(__('lang')));
-        });
-        Route::get('/add', function () {
-            return view('role-permission-add')->with('lang', json_encode(__('lang')));;
-        });
-        Route::get('/edit/{id}', function () {
-            return view('role-permission-edit')->with('lang', json_encode(__('lang')));;
-        });
+        Route::get('/', [RolePermissionController::class, 'listPage'])->name('role-permission.list');
+        Route::get('/add', [RolePermissionController::class, 'addPage'])->name('role-permission.add');
+        Route::get('/edit/{id}', [RolePermissionController::class, 'editPage'])->name('role-permission.edit');
     });
 });
 
