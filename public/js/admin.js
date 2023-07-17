@@ -36,11 +36,16 @@ const deleteAdmin = async (id) => {
     const confirmDelete = confirm(__['confirmDeleteData']);
     if (!confirmDelete) return;
 
-    const res = await axios.delete('/api/admin/' + id);
-    if (res.data.status == 200) {
-        window.location.reload();
-    } else {
-        alert(__['deleteFail']);
+    try {
+        const res = await axios.delete('/api/admin/' + id);
+        if (res.data.status == 200) {
+            window.location.reload();
+        } else {
+            alert(__['deleteFail']);
+        }
+    } catch (err) {
+        const message = err.response.data.message;
+        alert(message);
     }
 }
 
@@ -50,8 +55,10 @@ const editAdmin = async (id) => {
 
 const setAdminList = (adminList) => {
     const table = $('#adminList').DataTable();
+    const canUpdate = adminList.canUpdate;
+    const canDelete = adminList.canDelete;
     table.clear().draw();
-    adminList.forEach((admin, index) => {
+    adminList.data.forEach((admin, index) => {
         const { _id, username, name, role_permission, status, updated_at, created_at } = admin;
         table.row.add([
             username,
@@ -60,8 +67,8 @@ const setAdminList = (adminList) => {
             formatDateTime(created_at),
             formatDateTime(updated_at),
             status === '1' ? `<span class="badge bg-success">${__['enable']}</span>` : `<span class="badge bg-danger">${__['disable']}</span>`,
-            `<button type="button" class="btn btn-warning" onclick="editAdmin('${_id}')">${__['modify']}</button>
-            <button type="button" class="btn btn-danger" onclick="deleteAdmin('${_id}')">${__['delete']}</button>`
+            (canUpdate ? `<button type="button" class="btn btn-warning" onclick="editAdmin('${_id}')">${__['modify']}</button>` : '') +
+            (canDelete ? `<button type="button" class="btn btn-danger ms-2" onclick="deleteAdmin('${_id}')">${__['delete']}</button>` : '')
         ]).draw(false);
     });
 }

@@ -53,18 +53,10 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::group(['prefix' => 'admin'], function () {
-        Route::get('/', function () {
-            return view('admin-list')->with('lang', json_encode(__('lang')));
-        });
-        Route::get('/add', function () {
-            return view('admin-add')->with('lang', json_encode(__('lang')));;
-        });
-        Route::get('/edit/{id}', function () {
-            return view('admin-edit')->with('lang', json_encode(__('lang')));;
-        });
-        Route::get('/reset-password/{id}', function () {
-            return view('admin-reset-password')->with('lang', json_encode(__('lang')));;
-        });
+        Route::get('/', [AdminController::class, 'listPage'])->name('admin.list');
+        Route::get('/add', [AdminController::class, 'addPage'])->name('admin.add');
+        Route::get('/edit/{id}', [AdminController::class, 'editPage'])->name('admin.edit');
+        Route::get('/reset-password/{id}', [AdminController::class, 'resetPasswordPage'])->name('admin.reset-password');
     });
 
     Route::group(['prefix' => 'role-permission'], function () {

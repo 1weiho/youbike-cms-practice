@@ -41,7 +41,7 @@ class AdminPolicy
      */
     public function create(Admin $admin)
     {
-        //
+        return RolePermission::where('_id', $admin->role_permission_id)->first()->access_permission['admin_setting']['create'];
     }
 
     /**
@@ -51,9 +51,9 @@ class AdminPolicy
      * @param  \App\Models\Admin  $admin
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(Admin $admin, Admin $adminData)
+    public function update(Admin $admin)
     {
-        //
+        return RolePermission::where('_id', $admin->role_permission_id)->first()->access_permission['admin_setting']['update'];
     }
 
     /**
@@ -63,9 +63,9 @@ class AdminPolicy
      * @param  \App\Models\Admin  $admin
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(Admin $admin, Admin $adminData)
+    public function delete(Admin $admin)
     {
-        //
+        return RolePermission::where('_id', $admin->role_permission_id)->first()->access_permission['admin_setting']['delete'];
     }
 
     /**
