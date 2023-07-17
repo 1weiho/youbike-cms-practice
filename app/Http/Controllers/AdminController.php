@@ -65,7 +65,7 @@ class AdminController extends Controller
         try {
             $this->authorize('viewAny', Admin::class);
         } catch (\Throwable $th) {
-            return response()->json(['status' => 'error', 'message' => '權限拒絕'], 403);
+            return response()->json(['status' => 'error', 'message' => __('lang.permissionDenied')], 403);
         }
 
         $canUpdate = $this->checkUpdatePermission();
@@ -128,7 +128,7 @@ class AdminController extends Controller
         try {
             $this->authorize('create', Admin::class);
         } catch (\Throwable $th) {
-            return response()->json(['status' => 'error', 'message' => '權限拒絕'], 403);
+            return response()->json(['status' => 'error', 'message' => __('lang.permissionDenied')], 403);
         }
 
         $request->merge(['password' => bcrypt($request->password)]);
@@ -148,7 +148,7 @@ class AdminController extends Controller
         try {
             $this->authorize('viewAny', Admin::class);
         } catch (\Throwable $th) {
-            return response()->json(['status' => 'error', 'message' => '權限拒絕'], 403);
+            return response()->json(['status' => 'error', 'message' => __('lang.permissionDenied')], 403);
         }
 
         $collection = Admin::find($id);
@@ -181,7 +181,7 @@ class AdminController extends Controller
         try {
             $this->authorize('update', Admin::class);
         } catch (\Throwable $th) {
-            return response()->json(['status' => 'error', 'message' => '權限拒絕'], 403);
+            return response()->json(['status' => 'error', 'message' => __('lang.permissionDenied')], 403);
         }
 
         // reject updating password, username, return error
@@ -214,7 +214,7 @@ class AdminController extends Controller
         try {
             $this->authorize('delete', Admin::class);
         } catch (\Throwable $th) {
-            return response()->json(['status' => 'error', 'message' => '權限拒絕'], 403);
+            return response()->json(['status' => 'error', 'message' => __('lang.permissionDenied')], 403);
         }
 
         Admin::destroy($id);

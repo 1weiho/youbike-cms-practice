@@ -48,7 +48,7 @@ class RolePermissionController extends Controller
         try {
             $this->authorize('viewAny', RolePermission::class);
         } catch (\Throwable $th) {
-            return response()->json(['status' => 'error', 'message' => '權限拒絕'], 403);
+            return response()->json(['status' => 'error', 'message' => __('lang.permissionDenied')], 403);
         }
 
         $canUpdate = $this->checkUpdatePermission();
@@ -97,7 +97,7 @@ class RolePermissionController extends Controller
         try {
             $this->authorize('create', RolePermission::class);
         } catch (\Throwable $th) {
-            return response()->json(['status' => 'error', 'message' => '權限拒絕'], 403);
+            return response()->json(['status' => 'error', 'message' => __('lang.permissionDenied')], 403);
         }
 
         RolePermission::create($request->all());
@@ -110,7 +110,7 @@ class RolePermissionController extends Controller
         try {
             $this->authorize('viewAny', RolePermission::class);
         } catch (\Throwable $th) {
-            return response()->json(['status' => 'error', 'message' => '權限拒絕'], 403);
+            return response()->json(['status' => 'error', 'message' => __('lang.permissionDenied')], 403);
         }
 
         $collection = RolePermission::find($id);
@@ -124,7 +124,7 @@ class RolePermissionController extends Controller
         try {
             $this->authorize('update', RolePermission::class);
         } catch (\Throwable $th) {
-            return response()->json(['status' => 'error', 'message' => '權限拒絕'], 403);
+            return response()->json(['status' => 'error', 'message' => __('lang.permissionDenied')], 403);
         }
 
         $request->validate([
@@ -151,7 +151,7 @@ class RolePermissionController extends Controller
         try {
             $this->authorize('delete', RolePermission::class);
         } catch (\Throwable $th) {
-            return response()->json(['status' => 'error', 'message' => '權限拒絕'], 403);
+            return response()->json(['status' => 'error', 'message' => __('lang.permissionDenied')], 403);
         }
 
         $adminCount = Admin::where('role_permission_id', $id)->count();

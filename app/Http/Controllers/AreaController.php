@@ -33,7 +33,12 @@ class AreaController extends Controller
         $userId = auth()->user()->_id;
         $role_permission_id = Admin::where('_id', $userId)->first()->role_permission_id;
         $area_permission_id = RolePermission::where('_id', $role_permission_id)->first()->area_permission_id;
-        $collection = Area::whereIn('_id', $area_permission_id)->get();
+        $role_name = RolePermission::where('_id', $role_permission_id)->first()->role_name;
+        if ($role_name == "系統管理者") {
+            $collection = Area::all();
+        } else {
+            $collection = Area::whereIn('_id', $area_permission_id)->get();
+        }
         return response()->json($collection);
     }
 
@@ -43,7 +48,7 @@ class AreaController extends Controller
         try {
             $this->authorize('create', Area::class);
         } catch (\Throwable $th) {
-            return redirect()->route('area.list')->with('error', '權限不足');
+            return redirect()->route('area.list')->with('error', __('lang.permissionDenied'));
         }
         $validated = $request->validate([
             'name' => 'unique:area,name'
@@ -61,7 +66,7 @@ class AreaController extends Controller
         try {
             $this->authorize('delete', Area::class);
         } catch (\Throwable $th) {
-            return redirect()->route('area.list')->with('error', '權限不足');
+            return redirect()->route('area.list')->with('error', __('lang.permissionDenied'));
         }
         $newsCount = News::where('area_id', $id)->count();
         if ($newsCount > 0) {
@@ -89,7 +94,7 @@ class AreaController extends Controller
         try {
             $this->authorize('update', Area::class);
         } catch (\Throwable $th) {
-            return redirect()->route('area.list')->with('error', '權限不足');
+            return redirect()->route('area.list')->with('error', __('lang.permissionDenied'));
         }
         $validated = $request->validate([
             'name' => 'unique:area,name'

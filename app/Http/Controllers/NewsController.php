@@ -60,7 +60,7 @@ class NewsController extends Controller
                 'canDelete' => $canDelete,
             ]);
         } catch (\Throwable $th) {
-            return response()->json(['status' => 'error', 'message' => '權限拒絕'], 403);
+            return response()->json(['status' => 'error', 'message' => __('lang.permissionDenied')], 403);
         }
     }
 
@@ -137,7 +137,7 @@ class NewsController extends Controller
         try {
             $this->authorize('create', News::class);
         } catch (\Throwable $th) {
-            return response()->json(['status' => 'error', 'message' => '權限拒絕'], 403);
+            return response()->json(['status' => 'error', 'message' => __('lang.permissionDenied')], 403);
         }
         $areaString = $request->input('area');
         if ($areaString == '') {
@@ -184,7 +184,7 @@ class NewsController extends Controller
         try {
             $this->authorize('viewAny', News::class);
         } catch (\Throwable $th) {
-            return response()->json(['status' => 'error', 'message' => '權限拒絕'], 403);
+            return response()->json(['status' => 'error', 'message' => __('lang.permissionDenied')], 403);
         }
         $collection = News::find($id);
         $collection['area'] = $collection->area();
@@ -199,7 +199,7 @@ class NewsController extends Controller
         try {
             $this->authorize('update', News::class);
         } catch (\Throwable $th) {
-            return response()->json(['status' => 'error', 'message' => '權限拒絕'], 403);
+            return response()->json(['status' => 'error', 'message' => __('lang.permissionDenied')], 403);
         }
 
         $areaString = $request->input('area');
@@ -247,7 +247,7 @@ class NewsController extends Controller
         try {
             $this->authorize('delete', News::class);
         } catch (\Throwable $th) {
-            return response()->json(['status' => 'error', 'message' => '權限拒絕'], 403);
+            return response()->json(['status' => 'error', 'message' => __('lang.permissionDenied')], 403);
         }
 
         News::destroy($id);
