@@ -94,7 +94,7 @@
   const __ = {!! $lang !!};
   $(document).ready(async function () {
     const rolePermission = await fetchRolePermissionList();
-    setRolePermissionOption(rolePermission);
+    setRolePermissionOption(rolePermission.data);
     await initEditForm();
   });
 </script>
