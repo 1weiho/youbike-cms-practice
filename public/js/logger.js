@@ -1,16 +1,21 @@
 // route 網址的第一層對應為各功能的名稱
-const routeMap = {
-    'area': '區域',
-    'menu': '選單',
-    'news': '最新消息',
-    'admin': '管理者設定',
-    'role-permission': '角色權限',
-    'log': '操作紀錄',
-    'logger': '操作紀錄',
-    'lang': '語系',
-    'login': '登入',
-    'logout': '登出',
-    '': '首頁',
+let routeMap;
+function initRouteMap() {
+    const routeMap = {
+        'area': __['area'],
+        'menu': __['menu'],
+        'news': __['news'],
+        'admin': __['adminSetting'],
+        'role-permission': __['rolePermission'],
+        'log': __['log'],
+        'logger': __['log'],
+        'lang': __['locale'],
+        'login': __['login'],
+        'logout': __['logout'],
+        '': __['home'],
+    };
+
+    return routeMap;
 }
 
 const getLog = async (urlQuery) => {

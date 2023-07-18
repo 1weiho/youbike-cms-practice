@@ -15,7 +15,7 @@
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
   <script src="/js/logger.js"></script>
 </head>
-<title>操作紀錄</title>
+<title>{{ __('lang.log') }}</title>
 </head>
 
 <style>
@@ -38,21 +38,21 @@
 
 <x-layout>
   <div class="py-4 px-5">
-    <h2>操作紀錄</h2>
+    <h2>{{ __('lang.log') }}</h2>
     <div class="d-flex h-full justify-content-end rounded bg-white p-3 mt-3 d-flex flex-column">
       <div class="d-flex mb-3">
         <div class="d-flex align-items-center me-4">
-          <label class="me-2">帳號</label>
+          <label class="me-2">{{ __('lang.username') }}</label>
           <input type="text" class="form-control form-control-lg" placeholder="請輸入帳號" name="username" id="username" />
         </div>
         <div class="d-flex align-items-center me-4">
-          <label class="me-2">頁面</label>
+          <label class="me-2">{{ __('lang.page') }}</label>
           <select class="form-select form-select-lg" name="route" id="route">
             <option value="all">{{ __('lang.all') }}</option>
           </select>
         </div>
         <div class="d-flex align-items-center me-4">
-          <label class="me-2">功能</label>
+          <label class="me-2">{{ __('lang.function') }}</label>
           <select class="form-select form-select-lg" name="method" id="method">
             <option value="all">{{ __('lang.all') }}</option>
             <option value="GET">GET</option>
@@ -62,7 +62,7 @@
           </select>
         </div>
         <div class="d-flex align-items-center me-4">
-          <label class="me-2">時間範圍</label>
+          <label class="me-2">{{ __('lang.timeRange') }}</label>
           <input type="text" name="datetimes" id="datetimes" class="form-control form-control-lg" />
         </div>
         <div class="d-flex align-items-center me-4">
@@ -80,13 +80,13 @@
         <table id="myTable" class="table table-striped text-center table-bordered">
           <thead>
             <tr>
-              <th>帳號</th>
+              <th>{{ __('lang.username') }}</th>
               <th>IP</th>
-              <th>頁面</th>
-              <th>功能</th>
-              <th>請求</th>
-              <th>回應</th>
-              <th>操作時間</th>
+              <th>{{ __('lang.page') }}</th>
+              <th>{{ __('lang.function') }}</th>
+              <th>{{ __('lang.request') }}</th>
+              <th>{{ __('lang.response') }}</th>
+              <th>{{ __('lang.operateTime') }}</th>
             </tr>
           </thead>
           <tbody></tbody>
@@ -108,6 +108,7 @@
 <script>
   const __ = {!! $lang !!};
   $(document).ready(async function () {
+    routeMap = initRouteMap();
     const urlQuery = getUrlQuery();
     const data = await getLog(urlQuery);
     setLogList(data);
