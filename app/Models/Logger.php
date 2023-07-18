@@ -24,4 +24,10 @@ class Logger extends Model
         'total_time',
         'extra'
     ];
+
+    protected $casts = [
+        'request' => 'array',
+        'response' => 'array',
+        'extra' => 'array',
+    ];
 }

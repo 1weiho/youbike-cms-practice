@@ -34,11 +34,17 @@ class ActionLoggerMiddleware
         $route = $request->route()->uri();
         $apiName = $request->route()->getName();
         $requestPayload = $request->all();
-        $responsePayload = $response->original;
+
+        // 如果是 GET 方法，將 responsePayload 設為空字串
+        if ($method === 'GET') {
+            $responsePayload = array();
+        } else {
+            $responsePayload = $response->original;
+        }
 
         // 加入使用者資訊，若未登入，將 user 設為空字串
         if (auth()->user()) {
-            $user = auth()->user()->name;
+            $user = auth()->user()->username;
         } else {
             $user = '';
         }

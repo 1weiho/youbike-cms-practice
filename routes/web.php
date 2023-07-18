@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AreaController;
+use App\Http\Controllers\LoggerController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\RolePermissionController;
@@ -66,6 +67,8 @@ Route::middleware(['action.logger'])->group(function () {
             Route::get('/add', [RolePermissionController::class, 'addPage'])->name('role-permission.add');
             Route::get('/edit/{id}', [RolePermissionController::class, 'editPage'])->name('role-permission.edit');
         });
+
+        Route::get('/log', [LoggerController::class, 'listPage'])->name('log.list');
     });
     Route::get('/login', function () {
         return view('login');

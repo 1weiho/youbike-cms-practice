@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AreaController;
+use App\Http\Controllers\LoggerController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\RolePermissionController;
@@ -33,4 +34,6 @@ Route::middleware(['action.logger'])->group(function () {
     Route::post('admin/reset-password/{id}', [AdminController::class, 'resetPassword']);
     
     Route::apiResource('role-permission', RolePermissionController::class);
+
+    Route::get('logger', [LoggerController::class, 'index']);
 });
