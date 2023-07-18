@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\NewsExport;
 use App\Http\Requests\NewsRequest;
 use App\Models\Admin;
 use App\Models\News;
 use App\Models\RolePermission;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use Maatwebsite\Excel\Facades\Excel;
 
 class NewsController extends Controller
 {
@@ -252,5 +254,15 @@ class NewsController extends Controller
 
         News::destroy($id);
         return response()->json(['status' => 'success', 'message' => 'News deleted successfully!']);
+    }
+
+    public function export(Request $request, $fileType) {
+        if ($fileType == 'xlsx') {
+            return (new NewsExport($request))->download('news.xlsx');
+        } else if ($fileType == 'csv') {
+            return (new NewsExport($request))->download('news.csv');
+        } else {
+            return response()->json(['status' => 'error', 'message' => 'File type not supported!'], 422);
+        }
     }
 }

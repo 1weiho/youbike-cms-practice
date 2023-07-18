@@ -19,11 +19,13 @@
   <div class="py-4 px-5">
     <h2>{{ __('lang.news') }}</h2>
     <div class="d-flex h-full justify-content-end rounded bg-white p-3 mt-3 d-flex flex-column">
-      @can('create', App\Models\News::class)
       <div class="d-flex justify-content-end mb-3">
-        <a class="btn btn-primary" href="/news/add">{{ __('lang.add') }}</a>
+        @can('create', App\Models\News::class)
+        <a class="btn me-3 btn-primary" href="/news/add">{{ __('lang.add') }}</a>
+        @endcan
+        <a class="btn me-3 btn-warning" href="/news/export/xlsx" id="exportXlsxBtn">匯出EXCEL</a>
+        <a class="btn me-3 btn-warning" href="/news/export/csv" id="exportCsvBtn">匯出CSV</a>
       </div>
-      @endcan
       <div class="d-flex mb-3">
         <div class="d-flex align-items-center me-4">
           <label class="me-2">{{ __('lang.menu') }}</label>
@@ -94,6 +96,7 @@
     const urlQuery = getUrlQuery();
     const data = await getNews(urlQuery);
     setNewsList(data);
+    initExportBtn(urlQuery);
     const menu = await getMenu();
     setMenuOption(menu);
     const area = await getArea();

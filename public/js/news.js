@@ -333,3 +333,14 @@ const setCoverUploadListener = () => {
         reader.readAsDataURL(file);
     });
 }
+
+const initExportBtn = (query) => {
+    const url = window.location.href;
+    if (!url.includes('?')) return;
+    const params = url.substring(url.lastIndexOf('?') + 1);
+
+    const xlsxUrl = `/news/export/xlsx?${params}`;
+    const csvUrl = `/news/export/csv?${params}`;
+    $('#exportXlsxBtn').attr('href', xlsxUrl);
+    $('#exportCsvBtn').attr('href', csvUrl);
+}

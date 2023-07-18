@@ -6,6 +6,7 @@ use App\Models\Logger;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class ActionLoggerMiddleware
 {
@@ -30,7 +31,12 @@ class ActionLoggerMiddleware
         $request->files->remove('image');
 
         $method = $request->method();
-        $status = $response->status();
+        if ($response instanceof BinaryFileResponse) {
+            $status = $response->getStatusCode();
+        } else {
+            $status = $response->isSuccessful() ? $response->status() : null;
+        }
+
         $route = $request->route()->uri();
         $apiName = $request->route()->getName();
         $requestPayload = $request->all();

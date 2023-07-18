@@ -189,6 +189,7 @@ return [
          * Package Service Providers...
          */
         Jenssegers\Mongodb\MongodbServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
 
         /*
          * Application Service Providers...

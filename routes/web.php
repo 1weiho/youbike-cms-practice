@@ -53,6 +53,7 @@ Route::middleware(['action.logger'])->group(function () {
             Route::get('/', [NewsController::class, 'listPage'])->name('news.list');
             Route::get('/add', [NewsController::class, 'addPage'])->name('news.add');
             Route::get('/edit/{id}', [NewsController::class, 'editPage'])->name('news.edit');
+            Route::get('export/{fileType}', [NewsController::class, 'export']);
         });
 
         Route::group(['prefix' => 'admin'], function () {
