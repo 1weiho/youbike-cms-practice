@@ -11,7 +11,7 @@ class LoggerController extends Controller
     public function index(Request $request)
     {
         try {
-            $this->authorize('viewAny', News::class);
+            $this->authorize('viewAny', Logger::class);
 
             $collection = $this->getNewsData($request);
 
@@ -71,6 +71,11 @@ class LoggerController extends Controller
 
     public function listPage()
     {
-        return view('logger-list')->with('lang', json_encode(__('lang')));
+        try {
+            $this->authorize('viewAny', Logger::class);
+            return view('logger-list')->with('lang', json_encode(__('lang')));
+        } catch (\Throwable $th) {
+            return redirect()->route('admin.login');
+        }
     }
 }

@@ -44,11 +44,13 @@
                     </a>
                 </li>
                 @endcan
+                @can('viewAny', App\Models\Logger::class)
                 <li class="mb-3">
                     <a href="/log" class="nav-link{{ Request::is('log') ? ' active' : '' }} text-white">
                         操作紀錄
                     </a>
                 </li>
+                @endcan
             </ul>
             <span class="d-flex align-items-center">
                 <span class="me-2">{{ app()->getLocale() === 'zh' ? '語言：' : 'Language:' }}</span>
