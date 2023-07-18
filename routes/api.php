@@ -23,12 +23,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource('news', NewsController::class);
-Route::post('news/{id}', [NewsController::class, 'modify']);
-Route::get('menu', [MenuController::class, 'index']);
-Route::get('area', [AreaController::class, 'index']);
-
-Route::apiResource('admin', AdminController::class);
-Route::post('admin/reset-password/{id}', [AdminController::class, 'resetPassword']);
-
-Route::apiResource('role-permission', RolePermissionController::class);
+Route::middleware(['action.logger'])->group(function () {
+    Route::apiResource('news', NewsController::class);
+    Route::post('news/{id}', [NewsController::class, 'modify']);
+    Route::get('menu', [MenuController::class, 'index']);
+    Route::get('area', [AreaController::class, 'index']);
+    
+    Route::apiResource('admin', AdminController::class);
+    Route::post('admin/reset-password/{id}', [AdminController::class, 'resetPassword']);
+    
+    Route::apiResource('role-permission', RolePermissionController::class);
+});
