@@ -184,6 +184,19 @@
                     </div>
                   </td>
                 </tr>
+                <tr>
+                  <td>操作紀錄</td>
+                  <td class="d-flex">
+                    <div class="me-3">
+                      <input type="checkbox" class="selectAll">
+                      <label>{{ __('lang.selectAll') }}</label>
+                    </div>
+                    <div class="me-3">
+                      <input type="checkbox" class="checkbox">
+                      <label>{{ __('lang.browse') }}</label>
+                    </div>
+                  </td>
+                </tr>
               </tbody>
             </table>
           </div>

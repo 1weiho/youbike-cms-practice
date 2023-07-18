@@ -8,6 +8,7 @@ return [
     'news' => 'Latest News',
     'adminSetting' => 'Admin Setting',
     'rolePermission' => 'Role Permission',
+    'log' => 'Log',
     'version' => 'Version',
     'logout' => 'Logout',
 
@@ -38,6 +39,7 @@ return [
     'disable' => 'Disable',
     'selectAll' => 'Select All',
     'permissionDenied' => 'Permission denied',
+    'home' => 'Home',
 
     // data table
     'lengthMenu' => 'Display _MENU_ entries per page',
@@ -87,6 +89,15 @@ return [
     'useAccount' => 'Use Account',
     'permission' => 'Permission',
     'deleteFailByAdmin' => 'Delete fail, this role permission is used by admin',
+
+    // log
+    'page' => 'Page',
+    'function' => 'Function',
+    'timeRange' => 'Time Range',
+    'request' => 'Request',
+    'response' => 'Response',
+    'operateTime' => 'Operate Time',
+    'locale' => 'Locale',
 
     // login
     'login' => 'Login',

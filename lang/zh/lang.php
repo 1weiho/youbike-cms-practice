@@ -8,6 +8,7 @@ return [
     'news' => '最新消息',
     'adminSetting' => '管理者設定',
     'rolePermission' => '角色權限',
+    'log' => '操作紀錄',
     'version' => '版本',
     'logout' => '登出',
 
@@ -38,6 +39,7 @@ return [
     'disable' => '禁用',
     'selectAll' => '全選',
     'permissionDenied' => '權限不足',
+    'home' => '首頁',
 
     // data table
     'lengthMenu' => '每頁 _MENU_ 筆資料',
@@ -87,6 +89,15 @@ return [
     'useAccount' => '使用帳號',
     'permission' => '權限',
     'deleteFailByAdmin' => '刪除失敗，此角色權限已被使用',
+
+    // log
+    'page' => '頁面',
+    'function' => '功能',
+    'timeRange' => '時間範圍',
+    'request' => '請求',
+    'response' => '回應',
+    'operateTime' => '操作時間',
+    'locale' => '語系',
 
     // login
     'login' => '登入',

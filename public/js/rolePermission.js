@@ -174,7 +174,8 @@ const setCheckboxTable = (data) => {
         menu: __['menu'],
         news: __['news'],
         admin_setting: __['adminSetting'],
-        role_permission: __['rolePermission']
+        role_permission: __['rolePermission'],
+        log: '操作紀錄'
     };
 
     // 迭代每個欄位的全選按鈕
@@ -249,6 +250,7 @@ const getSelectTableData = () => {
         news: __['news'],
         admin_setting: __['adminSetting'],
         role_permission: __['rolePermission'],
+        log: '操作紀錄'
     }
 
     // 迭代每個欄位的全選按鈕
