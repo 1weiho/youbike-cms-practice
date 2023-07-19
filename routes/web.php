@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware(['action.logger'])->group(function () {
+Route::middleware([])->group(function () {
     Route::middleware(['auth'])->group(function () {
         Route::get('/', [AreaController::class, 'listAll']);
 
@@ -53,7 +53,8 @@ Route::middleware(['action.logger'])->group(function () {
             Route::get('/', [NewsController::class, 'listPage'])->name('news.list');
             Route::get('/add', [NewsController::class, 'addPage'])->name('news.add');
             Route::get('/edit/{id}', [NewsController::class, 'editPage'])->name('news.edit');
-            Route::get('export/{fileType}', [NewsController::class, 'export']);
+            Route::get('/export/{fileType}', [NewsController::class, 'export'])->name('news.export');
+            Route::post('/import', [NewsController::class, 'import'])->name('news.import');
         });
 
         Route::group(['prefix' => 'admin'], function () {

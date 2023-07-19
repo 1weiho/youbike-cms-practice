@@ -344,3 +344,40 @@ const initExportBtn = (query) => {
     $('#exportXlsxBtn').attr('href', xlsxUrl);
     $('#exportCsvBtn').attr('href', csvUrl);
 }
+
+const setImportListener = () => {
+    $('#importForm').submit(async function (event) {
+        event.preventDefault();
+        var form = $(this);
+        var formData = new FormData(form[0]);
+
+        try {
+            const response = await axios.post(form.attr('action'), formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                },
+                responseType: 'blob', // 設定回應的數據類型為 blob
+            });
+
+            // 使用 Blob 和 URL.createObjectURL 方法來下載檔案
+            const blob = new Blob([response.data], { type: 'application/octet-stream' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = '匯入結果.xlsx';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+
+            // 成功後關閉 Modal
+            $('#exampleModal').modal('hide');
+            await new Promise(resolve => setTimeout(resolve, 250));
+            alert("匯入成功");
+            window.location.reload();
+        } catch (error) {
+            // 處理錯誤情況
+            console.error(error);
+        }
+    });
+}

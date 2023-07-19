@@ -4,12 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Exports\NewsExport;
 use App\Http\Requests\NewsRequest;
+use App\Imports\NewsImport;
 use App\Models\Admin;
+use App\Models\Area;
+use App\Models\Menu;
 use App\Models\News;
 use App\Models\RolePermission;
+use DateTime;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use Maatwebsite\Excel\Facades\Excel;
+use OpenSpout\Common\Entity\Style\Style;
+use Rap2hpoutre\FastExcel\FastExcel;
+use Rap2hpoutre\FastExcel\SheetCollection;
 
 class NewsController extends Controller
 {
@@ -256,7 +264,8 @@ class NewsController extends Controller
         return response()->json(['status' => 'success', 'message' => 'News deleted successfully!']);
     }
 
-    public function export(Request $request, $fileType) {
+    public function export(Request $request, $fileType)
+    {
         if ($fileType == 'xlsx') {
             return (new NewsExport($request))->download('news.xlsx');
         } else if ($fileType == 'csv') {
@@ -264,5 +273,129 @@ class NewsController extends Controller
         } else {
             return response()->json(['status' => 'error', 'message' => 'File type not supported!'], 422);
         }
+    }
+
+    // 定義輔助函式
+    private function validateDateFormat($date)
+    {
+        $dateTime = DateTime::createFromFormat('Y-m-d', $date);
+        return $dateTime && $dateTime->format('Y-m-d') === $date;
+    }
+
+    private function getAreaIds($area)
+    {
+        $areaIds = [];
+        $areaName = explode('、', $area);
+        foreach ($areaName as $value) {
+            $area = Area::where('name', $value)->first();
+            if ($area !== null) {
+                $areaIds[] = $area->_id;
+            }
+        }
+        return $areaIds;
+    }
+
+    // ... (在控制器內部)
+    public function import(Request $request)
+    {
+        $file = $request->file('file');
+        $path = $file->getRealPath();
+        $collection = (new FastExcel)->import($path);
+
+        $importSuccessRecord = [];
+        $importFailRecord = [];
+
+        // save to database
+        foreach ($collection as $news) {
+            $area = $news[__('lang.area')];
+            $menu = $news[__('lang.menu')];
+            $start_at = $news[__('lang.startAt')];
+            $end_at = $news[__('lang.endAt')];
+            $status = $news[__('lang.status')];
+            $title = $news[__('lang.title')];
+
+            // 檢查每個欄位是否都有值
+            if ($area === '') {
+                $news['錯誤'] = '「區域」資料不能為空';
+                $importFailRecord[] = $news;
+                continue;
+            } elseif ($menu === '') {
+                $news['錯誤'] = '「選單」資料不能為空';
+                $importFailRecord[] = $news;
+                continue;
+            } elseif ($start_at === '') {
+                $news['錯誤'] = '「開始時間」資料不能為空';
+                $importFailRecord[] = $news;
+                continue;
+            } elseif ($end_at === '') {
+                $news['錯誤'] = '「結束時間」資料不能為空';
+                $importFailRecord[] = $news;
+                continue;
+            } elseif ($status === '') {
+                $news['錯誤'] = '「狀態」資料不能為空';
+                $importFailRecord[] = $news;
+                continue;
+            } elseif ($title === '') {
+                $news['錯誤'] = '「標題」資料不能為空';
+                $importFailRecord[] = $news;
+                continue;
+            }
+
+            // 將區域名稱轉換成區域id，並檢查是否有此區域
+            $areaId = $this->getAreaIds($area);
+
+            if (empty($areaId)) {
+                $news['錯誤'] = '「區域」資料不存在';
+                $importFailRecord[] = $news;
+                continue;
+            }
+
+            // 檢查選單是否存在
+            $menu = Menu::where('name', $menu)->first();
+            if ($menu === null) {
+                $news['錯誤'] = '「選單」資料不存在';
+                $importFailRecord[] = $news;
+                continue;
+            }
+            $menuId = $menu->_id;
+
+            // 檢查日期格式是否正確
+            if (!$this->validateDateFormat($start_at)) {
+                $news['錯誤'] = '「開始日期」格式不正確';
+                $importFailRecord[] = $news;
+                continue;
+            }
+
+            if (!$this->validateDateFormat($end_at)) {
+                $news['錯誤'] = '「結束日期」格式不正確';
+                $importFailRecord[] = $news;
+                continue;
+            }
+
+            // 檢查狀態是否正確
+            if ($status != 0 && $status != 1) {
+                $news['錯誤'] = '「狀態」輸入未允許值';
+                $importFailRecord[] = $news;
+                continue;
+            }
+
+            News::create([
+                'area_id' => $areaId,
+                'menu_id' => $menuId,
+                'start_at' => $start_at,
+                'end_at' => $end_at,
+                'status' => $status,
+                'title' => $title,
+            ]);
+
+            $importSuccessRecord[] = $news;
+        }
+
+        // 將 importSuccessRecord 和 importFailRecord 陣列匯出到 Excel
+        $sheets = new SheetCollection([
+            '匯入成功的資料明細' => $importSuccessRecord,
+            '匯入失敗的資料明細' => $importFailRecord
+        ]);
+        return (new FastExcel($sheets))->download('匯入結果.xlsx');
     }
 }
