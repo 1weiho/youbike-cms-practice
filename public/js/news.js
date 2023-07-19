@@ -35,7 +35,6 @@ const setNewsList = (data) => {
     const newsListPagination = data.data;
     const canUpdate = data.canUpdate;
     const canDelete = data.canDelete;
-    console.log(data);
 
     if (newsListPagination.data.length == 0) {
         html = `

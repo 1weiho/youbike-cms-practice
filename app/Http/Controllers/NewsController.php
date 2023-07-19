@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Exports\NewsExport;
 use App\Http\Requests\NewsRequest;
-use App\Imports\NewsImport;
 use App\Models\Admin;
 use App\Models\Area;
 use App\Models\Menu;
@@ -12,10 +11,7 @@ use App\Models\News;
 use App\Models\RolePermission;
 use DateTime;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
-use Maatwebsite\Excel\Facades\Excel;
-use OpenSpout\Common\Entity\Style\Style;
 use Rap2hpoutre\FastExcel\FastExcel;
 use Rap2hpoutre\FastExcel\SheetCollection;
 
