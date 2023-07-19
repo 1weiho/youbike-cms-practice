@@ -166,7 +166,9 @@ const setCheckboxTable = (data) => {
         create: __['add'],
         read: __['browse'],
         update: __['modify'],
-        delete: __['delete']
+        delete: __['delete'],
+        import: __['import'],
+        export: __['export'],
     };
 
     let permissionCategoryTexts = {
@@ -241,7 +243,9 @@ const getSelectTableData = () => {
         create: __['add'],
         read: __['browse'],
         update: __['modify'],
-        delete: __['delete']
+        delete: __['delete'],
+        import: __['import'],
+        export: __['export'],
     };
 
     let permissionCategoryTexts = {

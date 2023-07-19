@@ -53,7 +53,6 @@
   $(document).ready(async function () {
     initDataTable();
     const adminList = await fetchAdminList();
-    console.log(adminList);
     setAdminList(adminList);
   });
 </script>

@@ -72,6 +72,8 @@ return [
     'noSearchResult' => '查無資料',
     'cover' => '封面圖片',
     'content' => '內容',
+    'export' => '匯出',
+    'import' => '匯入',
 
     // admin
     'username' => '帳號',

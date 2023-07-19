@@ -11,10 +11,11 @@ RUN apt-get update && apt-get install -y \
     libcurl4-openssl-dev \
     pkg-config \
     libssl-dev \
+    libpng-dev \
     zip \
-    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath opcache \
+    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath opcache gd zip \
     && pecl install mongodb \
-    && docker-php-ext-enable mongodb
+    && docker-php-ext-enable mongodb gd zip
 
 # 設定工作目錄
 WORKDIR /var/www

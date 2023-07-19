@@ -22,15 +22,20 @@ const getLog = async (urlQuery) => {
     const res = await axios.get('/api/logger', {
         params: urlQuery
     });
-    console.log(res.data);
 
     // 將路由網址對應成頁面功能名稱
     res.data.data.forEach(item => {
         if (item.route.split('/')[0] === 'api') {
-            item.route = '[API] ' + routeMap[item.route.split('/')[1]];
+            pageName = '[API] ' + routeMap[item.route.split('/')[1]];
         } else {
-            item.route = routeMap[item.route.split('/')[0]];
+            pageName = routeMap[item.route.split('/')[0]];
         }
+        if (item.route.includes('export')) {
+            pageName += ' - ' + __['export'];
+        } else if (item.route.includes('import')) {
+            pageName += ' - ' + __['import'];
+        }
+        item.route = pageName;
     });
 
 
@@ -224,7 +229,6 @@ const setQueryForm = (query) => {
     if (query.datetimes) {
         datetimes = decodeURIComponent(query.datetimes);
         $('#datetimes').val(datetimes);
-        console.log(datetimes.split(' - ')[0]);
         initDateRangePicker(moment(datetimes.split(' - ')[0], 'M/D h:mm A'), moment(datetimes.split(' - ')[1], 'M/D h:mm A'));
     }
 }
