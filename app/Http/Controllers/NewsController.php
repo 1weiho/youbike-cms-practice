@@ -266,6 +266,11 @@ class NewsController extends Controller
 
     public function export(Request $request, $fileType)
     {
+        try {
+            $this->authorize('export', News::class);
+        } catch (\Throwable $th) {
+            return redirect()->route('admin.login');
+        }
         if ($fileType == 'xlsx') {
             return (new NewsExport($request))->download('news.xlsx');
         } else if ($fileType == 'csv') {
@@ -298,6 +303,11 @@ class NewsController extends Controller
     // ... (在控制器內部)
     public function import(Request $request)
     {
+        try {
+            $this->authorize('import', News::class);
+        } catch (\Throwable $th) {
+            return response()->json(['status' => 'error', 'message' => __('lang.permissionDenied')], 403);
+        }
         $file = $request->file('file');
         $path = $file->getRealPath();
         $collection = (new FastExcel)->import($path);

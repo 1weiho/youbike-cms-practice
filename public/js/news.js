@@ -378,6 +378,8 @@ const setImportListener = () => {
         } catch (error) {
             // 處理錯誤情況
             console.error(error);
+            alert("匯入失敗");
+            window.location.reload();
         }
     });
 }

@@ -92,4 +92,12 @@ class NewsPolicy
     {
         //
     }
+
+    public function export(Admin $admin) {
+        return RolePermission::where('_id', $admin->role_permission_id)->first()->access_permission['news']['export'];
+    }
+
+    public function import(Admin $admin) {
+        return RolePermission::where('_id', $admin->role_permission_id)->first()->access_permission['news']['import'];
+    }
 }

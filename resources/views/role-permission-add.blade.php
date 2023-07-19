@@ -132,6 +132,14 @@
                       <input type="checkbox" class="checkbox">
                       <label>{{ __('lang.delete') }}</label>
                     </div>
+                    <div class="me-3">
+                      <input type="checkbox" class="checkbox">
+                      <label>{{ __('lang.import') }}</label>
+                    </div>
+                    <div class="me-3">
+                      <input type="checkbox" class="checkbox">
+                      <label>{{ __('lang.export') }}</label>
+                    </div>
                   </td>
                 </tr>
                 <tr>

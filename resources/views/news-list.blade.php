@@ -19,6 +19,7 @@
 </head>
 
 <x-layout>
+  @can('import', App\Models\News::class)
   <!-- Modal -->
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -53,16 +54,21 @@
       </div>
     </div>
   </div>
+  @endcan
   <div class="py-4 px-5">
     <h2>{{ __('lang.news') }}</h2>
     <div class="d-flex h-full justify-content-end rounded bg-white p-3 mt-3 d-flex flex-column">
       <div class="d-flex justify-content-end mb-3">
+        @can('import', App\Models\News::class)
         <button class="btn me-3 btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">匯入</button>
+        @endcan
         @can('create', App\Models\News::class)
         <a class="btn me-3 btn-success" href="/news/add">{{ __('lang.add') }}</a>
         @endcan
+        @can('export', App\Models\News::class)
         <a class="btn me-3 btn-warning" href="/news/export/xlsx" id="exportXlsxBtn">匯出EXCEL</a>
         <a class="btn me-3 btn-warning" href="/news/export/csv" id="exportCsvBtn">匯出CSV</a>
+        @endcan
       </div>
       <div class="d-flex mb-3">
         <div class="d-flex align-items-center me-4">
