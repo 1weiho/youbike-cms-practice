@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware([])->group(function () {
+Route::middleware(['action.logger'])->group(function () {
     Route::middleware(['auth'])->group(function () {
         Route::get('/', [AreaController::class, 'listAll']);
 

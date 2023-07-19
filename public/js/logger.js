@@ -27,10 +27,17 @@ const getLog = async (urlQuery) => {
     // 將路由網址對應成頁面功能名稱
     res.data.data.forEach(item => {
         if (item.route.split('/')[0] === 'api') {
-            item.route = '[API] ' + routeMap[item.route.split('/')[1]];
+            pageName = '[API] ' + routeMap[item.route.split('/')[1]];
         } else {
-            item.route = routeMap[item.route.split('/')[0]];
+            pageName = routeMap[item.route.split('/')[0]];
         }
+        console.log(item.route);
+        if (item.route.includes('export')) {
+            pageName += ' - ' + __['export'];
+        } else if (item.route.includes('import')) {
+            pageName += ' - ' + __['import'];
+        }
+        item.route = pageName;
     });
 
 

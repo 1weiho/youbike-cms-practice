@@ -72,6 +72,8 @@ return [
     'noSearchResult' => 'No search result',
     'cover' => 'Cover',
     'content' => 'Content',
+    'export' => 'Export',
+    'import' => 'Import',
 
     // admin
     'username' => 'Username',

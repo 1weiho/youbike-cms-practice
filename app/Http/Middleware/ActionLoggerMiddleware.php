@@ -7,6 +7,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ActionLoggerMiddleware
 {
@@ -31,7 +32,7 @@ class ActionLoggerMiddleware
         $request->files->remove('image');
 
         $method = $request->method();
-        if ($response instanceof BinaryFileResponse) {
+        if ($response instanceof BinaryFileResponse || $response instanceof StreamedResponse) {
             $status = $response->getStatusCode();
         } else {
             $status = $response->isSuccessful() ? $response->status() : null;
@@ -45,7 +46,11 @@ class ActionLoggerMiddleware
         if ($method === 'GET') {
             $responsePayload = array();
         } else {
-            $responsePayload = $response->original;
+            if ($response instanceof BinaryFileResponse || $response instanceof StreamedResponse) {
+                $responsePayload = 'file';
+            } else {
+                $responsePayload = $response->original;
+            }
         }
 
         // 加入使用者資訊，若未登入，將 user 設為空字串
